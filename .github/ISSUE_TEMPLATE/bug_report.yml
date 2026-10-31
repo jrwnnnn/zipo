@@ -1,0 +1,62 @@
+name: "Bug report"
+description: Report an issue or possible bug
+title: "bug: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report a bug! Please include as much relevant information as possible.
+
+  - type: textarea
+    attributes:
+      label: Describe the bug
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: What's the expected result?
+      description: Describe what you expect to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Steps to reproduce
+      description: How do you trigger this bug? Please walk us through it step by step.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: System information
+      description: OS and version, browser and version, Node.js version, Astro version, package manager, and any relevant environment details.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Additional information
+      description: Is there anything else you think we should know?
+
+  - type: checkboxes
+    attributes:
+      label: Contributing a fix (thanks!)
+      description: If you feel like you could contribute to this issue, please check the box below. This would tell us and other people looking for contributions that someone's working on it.
+      options:
+        - label: I would be willing to submit a pull request for this issue.
+
+  - type: checkboxes
+    attributes:
+      label: Self-check
+      description: Before submitting the issue, please make sure you do the following.
+      options:
+        - label: Follow our [Code of Conduct](https://github.com/jrwnnnn/scaffold-astro/blob/main/CODE_OF_CONDUCT.md)
+          required: true
+        - label: Read the [Contributing Guidelines](https://github.com/jrwnnnn/scaffold-astro/blob/main/CONTRIBUTING.md).
+          required: true
+        - label: Check that there isn't [already an issue](https://github.com/jrwnnnn/scaffold-astro/issues) that reports the same bug to avoid creating a duplicate.
+          required: true

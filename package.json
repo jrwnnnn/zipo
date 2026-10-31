@@ -1,0 +1,21 @@
+{
+	"name": "project-name",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "echo \"No development command configured\" && exit 0",
+		"build": "echo \"No test build configured\" && exit 0",
+		"preview": "echo \"No test preview configured\" && exit 0",
+		"test": "echo \"No test command configured\" && exit 0",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"*.{cjs,js,json,md,mjs,ts,yaml}": "prettier --write"
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"husky": "^9.1.7",
+		"lint-staged": "^17.6.0",
+		"prettier": "^3.8.1"
+	}
+}
