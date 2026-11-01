@@ -7,6 +7,7 @@
 		"build": "vue-tsc && vite build",
 		"preview": "vite preview",
 		"sync": "npx cap sync android",
+		"android:dev": "ionic cap run android -l --external",
 		"lint": "npm run eslint && npm run prettier:check",
 		"eslint": "eslint .",
 		"typecheck": "vue-tsc --noEmit",
