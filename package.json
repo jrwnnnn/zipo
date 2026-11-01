@@ -19,7 +19,7 @@
 		"prepare": "husky"
 	},
 	"lint-staged": {
-		"*.{cjs,css,html,js,json,md,mjs,ts,vue,yaml,yml}": "prettier --write ."
+		"*.{cjs,css,html,js,json,md,mjs,ts,vue,yaml,yml}": "prettier --write"
 	},
 	"dependencies": {
 		"@capacitor/android": "^8.6.0",
