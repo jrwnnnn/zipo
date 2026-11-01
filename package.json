@@ -4,7 +4,7 @@
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite",
-		"build": "vue-tsc && vite build && npx cap sync android",
+		"build": "vue-tsc && vite build",
 		"preview": "vite preview",
 		"lint": "npm run eslint && npm run prettier:check",
 		"eslint": "eslint .",
