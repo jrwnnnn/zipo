@@ -1,0 +1,7 @@
+{
+	"name": "zipo",
+	"integrations": {
+		"capacitor": {}
+	},
+	"type": "vue-vite"
+}
