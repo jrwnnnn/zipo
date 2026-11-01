@@ -1,6 +1,8 @@
 <h1 align="center">Project Name</h1>
 
-<p align="center"><i>Quick one-liner about what this project does.</i></p>
+<p align="center">
+  <i>Quick one-liner about what this project does.</i>
+</p>
 
 <div align="center">
    <!-- FIND PREMADE BADGES HERE: https://github.com/Ileriayo/markdown-badges -->
