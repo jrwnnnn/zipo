@@ -7,7 +7,7 @@ import { IonContent, IonPage } from "@ionic/vue";
 		<ion-content :fullscreen="true">
 			<div
 				id="container"
-				class="h-full flex flex-col justify-center items-center gap-2"
+				class="flex h-full flex-col items-center justify-center gap-2"
 			>
 				<p class="text-xl font-bold">Ready to create an app?</p>
 				<p>
