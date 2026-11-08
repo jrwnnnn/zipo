@@ -97,7 +97,6 @@ jobs:
           distribution: "temurin"
           java-version: "17"
           cache: "gradle"
-      - uses: android-actions/setup-android@v3
       - run: npm ci
       - run: npm run build
       - run: npm run sync
