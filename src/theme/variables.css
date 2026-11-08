@@ -2,3 +2,37 @@
 http://ionicframework.com/docs/theming/ */
 
 @import "tailwindcss";
+
+@font-face {
+	font-family: "Geist";
+	src: url("../assets/fonts/vercel/Geist.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "NType82";
+	src: url("../assets/fonts/nOS/NType82.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "SpaceGrotesk";
+	src: url("../assets/fonts/florian_karsten/SpaceGrotesk.woff2") format("woff2");
+}
+
+@theme {
+	--color-surface: #1c1c1c;
+	--color-line: #323232;
+	--color-muted: #a8a8a8;
+}
+
+:root {
+	color-scheme: dark;
+	--ion-font-family: "SpaceGrotesk";
+	--ion-background-color: #000;
+	--ion-text-color: #fff;
+	--ion-toolbar-background: #000;
+	--ion-toolbar-color: #fff;
+}
+
+.card {
+	@apply bg-surface rounded-2xl p-5;
+}
