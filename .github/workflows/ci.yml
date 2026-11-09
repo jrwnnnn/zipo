@@ -49,7 +49,7 @@ jobs:
       - run: npm run test:unit
 
   e2e:
-    needs: [unit]
+    needs: [lint, typecheck]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
