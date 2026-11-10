@@ -17,7 +17,7 @@ For new features or significant changes, [open an issue](../../issues) or commen
 Make sure you have the following:
 
 - LTS version of [Node.js](https://nodejs.org/en/download)
-- JDK [17](https://adoptium.net/temurin/releases/?version=17) or [21](https://adoptium.net/temurin/releases/?version=21)
+- JDK [21](https://adoptium.net/temurin/releases/?version=21)
 - [Android SDK (API 36)](https://developer.android.com/tools/sdkmanager) with `ANDROID_HOME` configured
 - [Git](https://git-scm.com/)
 
