@@ -22,15 +22,18 @@
 		"*.{cjs,css,html,js,json,md,mjs,ts,vue,yaml,yml}": "prettier --write"
 	},
 	"dependencies": {
+		"@capacitor-community/bluetooth-le": "^8.3.0",
 		"@capacitor/android": "^8.6.0",
 		"@capacitor/app": "8.1.2",
 		"@capacitor/core": "8.6.0",
 		"@capacitor/haptics": "8.0.2",
 		"@capacitor/keyboard": "8.0.6",
 		"@capacitor/status-bar": "8.0.4",
+		"@capacitor/toast": "^8.0.1",
 		"@ionic/vue": "^9.0.0",
 		"@ionic/vue-router": "^9.0.0",
 		"ionicons": "^8.1.0",
+		"pinia": "^4.1.0",
 		"vue": "^3.5.0",
 		"vue-router": "^5.0.0"
 	},
