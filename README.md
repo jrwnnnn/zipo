@@ -1,8 +1,6 @@
-<h1 align="center">Project Name</h1>
+<h1 class="text-center font-serif bold">Zipo</h1>
 
-<p align="center">
-  <i>Quick one-liner about what this project does.</i>
-</p>
+<p align="center">A Project Built for Security</p>
 
 <div align="center">
    <!-- FIND PREMADE BADGES HERE: https://github.com/Ileriayo/markdown-badges -->
