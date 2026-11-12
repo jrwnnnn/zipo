@@ -7,6 +7,7 @@ import {
 	IonTitle,
 	IonToolbar,
 } from "@ionic/vue";
+import RssiComponent from "@/components/RssiComponent.vue";
 </script>
 
 <template>
@@ -24,11 +25,14 @@ import {
 			</ion-header>
 			<main class="flex min-h-full flex-col gap-3">
 				<ConnectionStatus />
+				
 				<section class="grid grid-cols-2 gap-2">
 					<div
 						class="flex aspect-square items-center justify-center rounded-full bg-white"
 					></div>
-					<div class="card aspect-square"></div>
+					<div class="card aspect-square">
+						<RssiComponent/>
+					</div>
 				</section>
 
 				<section class="card">
