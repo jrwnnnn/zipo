@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ConnectionStatus from "@/components/ConnectionStatus.vue";
+import RssiComponent from "@/components/RssiComponent.vue";
 import {
 	IonContent,
 	IonHeader,
@@ -7,7 +8,6 @@ import {
 	IonTitle,
 	IonToolbar,
 } from "@ionic/vue";
-import RssiComponent from "@/components/RssiComponent.vue";
 </script>
 
 <template>
@@ -25,14 +25,12 @@ import RssiComponent from "@/components/RssiComponent.vue";
 			</ion-header>
 			<main class="flex min-h-full flex-col gap-3">
 				<ConnectionStatus />
-				
+
 				<section class="grid grid-cols-2 gap-2">
 					<div
 						class="flex aspect-square items-center justify-center rounded-full bg-white"
 					></div>
-					<div class="card aspect-square">
-						<RssiComponent/>
-					</div>
+					<RssiComponent />
 				</section>
 
 				<section class="card">
