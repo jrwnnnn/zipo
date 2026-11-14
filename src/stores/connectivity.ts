@@ -82,7 +82,9 @@ export const useConnectivityStore = defineStore("zipo", () => {
 
 	async function restore() {
 		await BleClient.initialize();
-		const [d] = await BleClient.getConnectedDevices([SERVICE_UUID]);
+		const d = (await BleClient.getConnectedDevices([SERVICE_UUID])).find(
+			(d) => d.name === "Zipo",
+		);
 		if (!d) return false;
 
 		state.value = "connecting";
