@@ -90,7 +90,7 @@ export const useConnectivityStore = defineStore("zipo", () => {
 		if (!d) return false;
 
 		state.value = "connecting";
-		await BleClient.connect(d.deviceId, disconnect);
+		await BleClient.connect(d.deviceId, onDisconnect);
 		await listen(d.deviceId);
 
 		esp.value = { deviceId: d.deviceId, name: d.name };
