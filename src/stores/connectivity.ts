@@ -7,9 +7,7 @@ import {
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-const SERVICE_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-// const RX_UUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
-const TX_UUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+import { SERVICE_UUID, TX_UUID } from "@/services/uuids";
 
 export const useConnectivityStore = defineStore("zipo", () => {
 	const state = ref<"connected" | "connecting" | "idle">("idle");
