@@ -15,7 +15,7 @@ Having short triggers of anixious thoughts whenever you leave your belongings un
 
 ## Support
 
-If you run into any issues, please <b> [open an issue](https://github.com/jrwnnnn/scaffold/issues) </b> and include all relevant details needed to diagnose the problem.
+If you run into any issues, please <b> [open an issue](../../issues) </b> and include all relevant details needed to diagnose the problem.
 
 ## License
 
@@ -30,8 +30,8 @@ The above copyright notice and this permission notice shall be included in all c
 
 ## Contributors
 
-<a href="https://github.com/jrwnnnn/scaffold/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=jrwnnnn/scaffold" />
+<a href="https://github.com/jrwnnnn/zipo/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=jrwnnnn/zipo" />
 </a>
 
 <br>
