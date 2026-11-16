@@ -7,6 +7,10 @@ import {
 	IonTitle,
 	IonToolbar,
 } from "@ionic/vue";
+import ActivityLogs from "@/components/ActivityLogs.vue";
+import { useConnectivityStore } from "@/stores/connectivity";
+
+const connectivityStore = useConnectivityStore();
 </script>
 
 <template>
@@ -22,8 +26,27 @@ import {
 					</ion-title>
 				</ion-toolbar>
 			</ion-header>
+
 			<main class="flex min-h-full flex-col gap-3">
 				<ConnectionStatus />
+
+				<!-- Action Buttons: Unlock & Lock Zipo -->
+				<div class="flex gap-2 p-4">
+					<button
+						@click="connectivityStore.unlockZipo()"
+						class="cursor-pointer rounded bg-blue-600 px-4 py-2 text-white"
+					>
+						Unlock Zipo
+					</button>
+
+					<button
+						@click="connectivityStore.lockZipo()"
+						class="cursor-pointer rounded bg-red-600 px-4 py-2 text-white"
+					>
+						Lock Zipo
+					</button>
+				</div>
+
 				<section class="grid grid-cols-2 gap-2">
 					<div
 						class="flex aspect-square items-center justify-center rounded-full bg-white"
@@ -31,17 +54,7 @@ import {
 					<div class="card aspect-square"></div>
 				</section>
 
-				<section class="card">
-					<p class="font-['Geist'] font-bold">Activity log</p>
-					<p class="font-['SpaceGrotesk']">
-						Nul ne peut être soumis à une arrestation, une détention ou un exil
-						arbitraires. Toute personne a droit, en pleine égalité, à ce que sa
-						cause soit entendue équitablement et publiquement par un tribunal
-						indépendant et impartial, qui décidera, soit de ses droits et
-						obligations, soit du bien-fondé de toute accusation en matière
-						pénale dirigée contre elle.
-					</p>
-				</section>
+				<ActivityLogs />
 			</main>
 		</ion-content>
 	</ion-page>
