@@ -1,15 +1,10 @@
 import { Toast } from "@capacitor/toast";
-import {
-	BleClient,
-	type BleDevice,
-	dataViewToText,
-} from "@capacitor-community/bluetooth-le";
+import { BleClient, type BleDevice } from "@capacitor-community/bluetooth-le";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-const SERVICE_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-// const RX_UUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
-const TX_UUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+import { txListen } from "@/services/characteristics";
+import { SERVICE_UUID } from "@/services/uuids";
 
 export const useConnectivityStore = defineStore("zipo", () => {
 	const state = ref<"connected" | "connecting" | "idle">("idle");
@@ -33,7 +28,7 @@ export const useConnectivityStore = defineStore("zipo", () => {
 
 						// connect and listen to the found Zipo
 						await BleClient.connect(result.device.deviceId, onDisconnect);
-						await listen(result.device.deviceId);
+						await txListen(result.device.deviceId);
 
 						esp.value = {
 							deviceId: result.device.deviceId,
@@ -76,20 +71,16 @@ export const useConnectivityStore = defineStore("zipo", () => {
 		onDisconnect(id);
 	}
 
-	async function listen(id: string) {
-		await BleClient.startNotifications(id, SERVICE_UUID, TX_UUID, (val) => {
-			console.log(dataViewToText(val)); //log all messages from the ESP32 for now
-		});
-	}
-
 	async function restore() {
 		await BleClient.initialize();
-		const [d] = await BleClient.getConnectedDevices([SERVICE_UUID]);
+		const d = (await BleClient.getConnectedDevices([SERVICE_UUID])).find(
+			(d) => d.name === "Zipo",
+		);
 		if (!d) return false;
 
 		state.value = "connecting";
-		await BleClient.connect(d.deviceId, disconnect);
-		await listen(d.deviceId);
+		await BleClient.connect(d.deviceId, onDisconnect);
+		await txListen(d.deviceId);
 
 		esp.value = { deviceId: d.deviceId, name: d.name };
 		state.value = "connected";
