@@ -1,52 +1,11 @@
 <script setup lang="ts">
 import { useActivityLogs } from "@/services/activity";
-import { txHandle } from "@/services/txHandle";
 import { latestActivity } from "@/services/logs";
-import { useConnectivityStore } from "@/stores/connectivity";
 
-const { activities, clearActivities } = useActivityLogs();
-const connectivityStore = useConnectivityStore();
-
-function handleTestClick(triggerType: string) {
-	txHandle(triggerType);
-}
+const { activities } = useActivityLogs();
 </script>
 
 <template>
-	<div class="display flex gap-2 px-3 py-2">
-		<button
-			@click="connectivityStore.setMockConnectionState('connected')"
-			class="mt-2 cursor-pointer rounded bg-white/10 px-3 py-1"
-		>
-			Open
-		</button>
-		<button
-			@click="connectivityStore.setMockConnectionState('idle')"
-			class="mt-2 cursor-pointer rounded bg-white/10 px-3 py-1"
-		>
-			Close
-		</button>
-		<button
-			@click="clearActivities()"
-			class="mt-2 cursor-pointer rounded bg-white/10 px-3 py-1"
-		>
-			Clear History
-		</button>
-
-		<button
-			@click="handleTestClick('TRIGGER.HIGH')"
-			class="mt-2 cursor-pointer rounded bg-white/10 px-3 py-1"
-		>
-			High
-		</button>
-		<button
-			@click="handleTestClick('TRIGGER.LOW')"
-			class="mt-2 cursor-pointer rounded bg-white/10 px-3 py-1"
-		>
-			Low
-		</button>
-	</div>
-
 	<details class="card font-['SpaceGrotesk']">
 		<summary class="flex cursor-pointer items-center justify-between">
 			<div class="flex flex-col">

@@ -7,10 +7,7 @@ import {
 	IonTitle,
 	IonToolbar,
 } from "@ionic/vue";
-import ActivityLogs from "@/components/ActivityLogs.vue";
-import { useConnectivityStore } from "@/stores/connectivity";
-
-const connectivityStore = useConnectivityStore();
+import ActivityLog from "@/components/ActivityLog.vue";
 </script>
 
 <template>
@@ -30,23 +27,6 @@ const connectivityStore = useConnectivityStore();
 			<main class="flex min-h-full flex-col gap-3">
 				<ConnectionStatus />
 
-				<!-- Action Buttons: Unlock & Lock Zipo -->
-				<div class="flex gap-2 p-4">
-					<button
-						@click="connectivityStore.unlockZipo()"
-						class="cursor-pointer rounded bg-blue-600 px-4 py-2 text-white"
-					>
-						Unlock Zipo
-					</button>
-
-					<button
-						@click="connectivityStore.lockZipo()"
-						class="cursor-pointer rounded bg-red-600 px-4 py-2 text-white"
-					>
-						Lock Zipo
-					</button>
-				</div>
-
 				<section class="grid grid-cols-2 gap-2">
 					<div
 						class="flex aspect-square items-center justify-center rounded-full bg-white"
@@ -54,7 +34,7 @@ const connectivityStore = useConnectivityStore();
 					<div class="card aspect-square"></div>
 				</section>
 
-				<ActivityLogs />
+				<ActivityLog />
 			</main>
 		</ion-content>
 	</ion-page>

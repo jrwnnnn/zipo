@@ -5,7 +5,7 @@ import { ref } from "vue";
 
 import { txListen } from "@/services/characteristics";
 import { addActivity } from "@/services/logs";
-import { SERVICE_UUID, RX_UUID } from "@/services/uuids";
+import { SERVICE_UUID } from "@/services/uuids";
 
 export const useConnectivityStore = defineStore("zipo", () => {
 	const state = ref<"connected" | "connecting" | "idle">("idle");
@@ -106,102 +106,6 @@ export const useConnectivityStore = defineStore("zipo", () => {
 		isUnlockedByApp.value = status;
 	}
 
-	// Bypass alarm for manual access
-	async function unlockZipo() {
-		if (!esp.value || state.value !== "connected") {
-			await Toast.show({
-				text: "Device not connected.",
-				duration: "short",
-			});
-			return;
-		}
-
-		const deviceId = esp.value.deviceId;
-
-		try {
-			// Only call native BLE write if it's NOT a mock device
-			if (!deviceId.startsWith("MOCK-")) {
-				const data = new DataView(new Uint8Array([0x01]).buffer);
-				await BleClient.write(deviceId, SERVICE_UUID, RX_UUID, data);
-			} else {
-				console.log("[Mock Mode] Skipped physical BLE write for unlock");
-			}
-
-			isUnlockedByApp.value = true;
-			addActivity("Unlocked", `Sent unlock command to Zipo (${deviceId})`);
-
-			await Toast.show({
-				text: "Zipo unlocked successfully!",
-				duration: "short",
-			});
-		} catch (error) {
-			console.error("Failed to unlock Zipo:", error);
-			await Toast.show({
-				text: "Failed to unlock Zipo.",
-				duration: "long",
-			});
-		}
-	}
-
-	// Lock system to alert and ready the alarms
-	async function lockZipo() {
-		if (!esp.value || state.value !== "connected") {
-			await Toast.show({
-				text: "Device not connected.",
-				duration: "short",
-			});
-			return;
-		}
-
-		const deviceId = esp.value.deviceId;
-
-		try {
-			// Only call native BLE write if it's NOT a mock device
-			if (!deviceId.startsWith("MOCK-")) {
-				const data = new DataView(new Uint8Array([0x00]).buffer);
-				await BleClient.write(deviceId, SERVICE_UUID, RX_UUID, data);
-			} else {
-				console.log("[Mock Mode] Skipped physical BLE write for lock");
-			}
-
-			isUnlockedByApp.value = false;
-			addActivity(
-				"Locked / Armed",
-				`Sent lock/alarm-ready command to Zipo (${deviceId})`,
-			);
-
-			await Toast.show({
-				text: "Zipo locked and alarms alerted.",
-				duration: "short",
-			});
-		} catch (error) {
-			console.error("Failed to lock Zipo:", error);
-			await Toast.show({
-				text: "Failed to lock Zipo.",
-				duration: "long",
-			});
-		}
-	}
-
-	// Temporary helper to mock connection state for UI testing
-	function setMockConnectionState(mockState: "connected" | "idle") {
-		state.value = mockState;
-		if (mockState === "connected") {
-			esp.value = { deviceId: "MOCK-DEVICE-1234", name: "Zipo Mock" };
-			addActivity(
-				"Mock Connected",
-				"Manually forced connection state to connected",
-			);
-		} else {
-			esp.value = null;
-			isUnlockedByApp.value = false;
-			addActivity(
-				"Mock Disconnected",
-				"Manually forced connection state to idle",
-			);
-		}
-	}
-
 	// reset states
 	function onDisconnect(id: string) {
 		console.log("Disconnected from", id);
@@ -222,8 +126,5 @@ export const useConnectivityStore = defineStore("zipo", () => {
 		disconnect,
 		restore,
 		setUnlockedByApp,
-		unlockZipo,
-		lockZipo,
-		setMockConnectionState,
 	};
 });
