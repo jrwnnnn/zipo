@@ -3,9 +3,12 @@ import { BleClient, type BleDevice } from "@capacitor-community/bluetooth-le";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
+import { useUnlock } from "@/services/applock";
 import { txListen } from "@/services/characteristics";
 import { addActivity } from "@/services/logs";
 import { SERVICE_UUID } from "@/services/uuids";
+
+const unlockStore = useUnlock();
 
 export const useConnectivityStore = defineStore("zipo", () => {
 	const state = ref<"connected" | "connecting" | "idle">("idle");
@@ -72,12 +75,6 @@ export const useConnectivityStore = defineStore("zipo", () => {
 	async function disconnect() {
 		if (!esp.value) return;
 		const id = esp.value.deviceId;
-
-		// If it's a real device, disconnect via BLE plugin
-		if (!id.startsWith("MOCK-")) {
-			await BleClient.disconnect(id);
-		}
-
 		onDisconnect(id);
 	}
 
@@ -111,7 +108,7 @@ export const useConnectivityStore = defineStore("zipo", () => {
 		console.log("Disconnected from", id);
 		esp.value = null;
 		state.value = "idle";
-		isUnlockedByApp.value = false;
+		unlockStore.resetUnlock();
 		addActivity(
 			"Bluetooth Lost",
 			`Lost connection or reception from device ${id}`,
