@@ -8,12 +8,10 @@ import { txListen } from "@/services/characteristics";
 import { addActivity } from "@/services/logs";
 import { SERVICE_UUID } from "@/services/uuids";
 
-const unlockStore = useUnlock();
-
 export const useConnectivityStore = defineStore("zipo", () => {
 	const state = ref<"connected" | "connecting" | "idle">("idle");
 	const esp = ref<BleDevice | null>(null);
-	const isUnlockedByApp = ref(false);
+	const unlockStore = useUnlock();
 
 	async function connect() {
 		if (state.value !== "idle") return;
@@ -99,10 +97,6 @@ export const useConnectivityStore = defineStore("zipo", () => {
 		console.log("Connected to ", esp.value.deviceId);
 	}
 
-	function setUnlockedByApp(status: boolean) {
-		isUnlockedByApp.value = status;
-	}
-
 	// reset states
 	function onDisconnect(id: string) {
 		console.log("Disconnected from", id);
@@ -118,10 +112,10 @@ export const useConnectivityStore = defineStore("zipo", () => {
 	return {
 		state,
 		esp,
-		isUnlockedByApp,
+		isUnlockedByApp: unlockStore.isUnlockedByApp,
+		setUnlockedByApp: unlockStore.setUnlockedByApp,
 		connect,
 		disconnect,
 		restore,
-		setUnlockedByApp,
 	};
 });
