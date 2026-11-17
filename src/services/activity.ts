@@ -1,6 +1,6 @@
 import { useStorage, type RemovableRef } from "@vueuse/core";
 
-export interface Activity {
+interface Activity {
 	id: number;
 	status: string;
 	date: string;
@@ -12,7 +12,7 @@ export interface Activity {
 const activities = useStorage<Activity[]>("activities", []);
 
 //explicitly define the return type for the composable
-export interface UseActivityLogsReturn {
+interface UseActivityLogsReturn {
 	activities: RemovableRef<Activity[]>;
 	addActivity: (status: string, info: string) => void;
 	clearActivities: () => void;

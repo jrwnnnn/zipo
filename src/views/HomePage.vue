@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ConnectionStatus from "@/components/ConnectionStatus.vue";
+import RssiComponent from "@/components/RssiComponent.vue";
 import {
 	IonContent,
 	IonHeader,
@@ -31,7 +32,7 @@ import ActivityLog from "@/components/ActivityLog.vue";
 					<div
 						class="flex aspect-square items-center justify-center rounded-full bg-white"
 					></div>
-					<div class="card aspect-square"></div>
+					<RssiComponent />
 				</section>
 
 				<ActivityLog />
