@@ -96,3 +96,10 @@ If you're new to pull requests, GitHub's [guide to creating a pull request from 
 - Make sure your PR title follows the [Conventional Commits v1.0.0](https://www.conventionalcommits.org/en/v1.0.0/) specification.
 
 - It's ok to have multiple commits in a single PR. You don't have to rebase or force push for your changes as we will squash the commits into one commit when merging.
+
+## AI-Assisted Contributions
+
+We welcome the thoughtful use of AI tools when contributing to Zipo, but ask all contributors to follow [two core principles](https://roe.dev/blog/using-ai-in-open-source):
+
+1. **Never let an LLM speak for you** - all comments, issues, and PR descriptions should be written in your own words, reflecting your own understanding.
+2. **Never let an LLM think for you** - only submit contributions you fully understand and can explain.
