@@ -34,7 +34,7 @@ http://ionicframework.com/docs/theming/ */
 }
 
 .card {
-	@apply bg-surface rounded-2xl p-5;
+	@apply bg-surface rounded-2xl p-4;
 }
 
 .custom-scrollbar::-webkit-scrollbar {
