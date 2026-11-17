@@ -1,6 +1,6 @@
 import { useStorage, type RemovableRef } from "@vueuse/core";
 
-export interface Activity {
+interface Activity {
 	id: number;
 	status: string;
 	date: string;
