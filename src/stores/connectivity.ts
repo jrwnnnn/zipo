@@ -71,7 +71,6 @@ export const useConnectivityStore = defineStore("zipo", () => {
 	async function disconnect() {
 		if (!esp.value) return;
 		const id = esp.value.deviceId;
-		await BleClient.disconnect(id);
 		onDisconnect(id);
 	}
 
