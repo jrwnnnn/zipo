@@ -1,79 +1,45 @@
 <script setup lang="ts">
 import { useActivityLog } from "@/composables/useActivityLog";
 
+import connectIcon from "@/assets/ui/connect-icon.png";
+import disconnectIcon from "@/assets/ui/disconnect-icon.png";
+import warningIcon from "@/assets/ui/warning-icon.png";
+
 const { activities } = useActivityLog();
 </script>
 
 <template>
-	<details class="card font-['SpaceGrotesk']">
-		<summary class="flex cursor-pointer items-center justify-between">
-			<div class="flex flex-col">
-				<p class="font-['Geist'] font-bold">Activity Logs (See More)</p>
-
-				<p v-if="activities.length > 0">
-					{{ activities[0].status }} •
-					<span class="text-[calc(0.925rem-2px)] text-white/65">
-						{{ new Date(activities[0].timestamp).toLocaleDateString() }} at
-						{{ new Date(activities[0].timestamp).toLocaleTimeString() }}
-					</span>
-				</p>
-				<p v-else class="text-white/65">No logs recorded yet.</p>
-			</div>
-		</summary>
-
-		<div class="custom-scrollbar mt-4 max-h-130 space-y-2 overflow-y-auto">
-			<p v-if="activities.length === 0" class="text-white/65">
-				Wow, it's empty in here!
-			</p>
-
+	<div class="card flex min-h-100 flex-col gap-3">
+		<p class="font-['Geist'] font-bold">Activity log</p>
+		<hr class="bg-line" />
+		<div class="flex flex-col gap-3">
 			<div
-				v-for="(activity, index) in activities"
+				v-for="activity in activities"
 				:key="activity.id"
-				class="card mb-2 border-b border-white/30 pb-2"
+				class="flex items-center gap-3"
 			>
-				<ol class="m-0 list-none p-0">
-					<li>
-						<span class="text-[calc(0.925rem-2px)] text-white/65">
-							#{{ activities.length - index }} •
-						</span>
-
-						{{ activity.status }}
-
-						<span
-							v-if="index === 0"
-							class="ml-1 rounded bg-white/20 px-1.5 py-0.5 text-[calc(0.870rem-2px)] font-bold"
-						>
-							Latest
-						</span>
-
-						<span class="text-[calc(0.925rem-2px)] text-white/65">
-							• {{ new Date(activity.timestamp).toLocaleDateString() }} at
-							{{ new Date(activity.timestamp).toLocaleTimeString() }}
-						</span>
-						<br />
+				<img
+					:src="
+						activity.status === 'connected'
+							? connectIcon
+							: activity.status === 'triggered'
+								? warningIcon
+								: disconnectIcon
+					"
+					class="aspect-square w-6"
+				/>
+				<div>
+					<p
+						class="font-[Geist]"
+						:class="activity.status === 'triggered' ? 'text-red-500' : ''"
+					>
 						{{ activity.label }}
-					</li>
-				</ol>
+					</p>
+					<p class="text-muted text-xs">
+						{{ new Date(activity.timestamp).toLocaleString() }}
+					</p>
+				</div>
 			</div>
 		</div>
-	</details>
+	</div>
 </template>
-
-<style scoped>
-.custom-scrollbar::-webkit-scrollbar {
-	width: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-	background: transparent;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-	background: rgba(255, 255, 255, 0.2);
-	border-radius: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-	background: rgba(255, 255, 255, 0.4);
-}
-</style>
