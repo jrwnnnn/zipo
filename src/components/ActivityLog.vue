@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { useActivityLogs } from "@/services/activity";
-import { latestActivity } from "@/services/logs";
+import { useActivityLog } from "@/composables/useActivityLog";
 
-const { activities } = useActivityLogs();
+const { activities } = useActivityLog();
 </script>
 
 <template>
@@ -11,10 +10,11 @@ const { activities } = useActivityLogs();
 			<div class="flex flex-col">
 				<p class="font-['Geist'] font-bold">Activity Logs (See More)</p>
 
-				<p v-if="latestActivity">
-					{{ latestActivity.status }} •
+				<p v-if="activities.length > 0">
+					{{ activities[0].status }} •
 					<span class="text-[calc(0.925rem-2px)] text-white/65">
-						{{ latestActivity.date }} at {{ latestActivity.time }}
+						{{ new Date(activities[0].timestamp).toLocaleDateString() }} at
+						{{ new Date(activities[0].timestamp).toLocaleTimeString() }}
 					</span>
 				</p>
 				<p v-else class="text-white/65">No logs recorded yet.</p>
@@ -47,10 +47,11 @@ const { activities } = useActivityLogs();
 						</span>
 
 						<span class="text-[calc(0.925rem-2px)] text-white/65">
-							• {{ activity.date }} at {{ activity.time }}
+							• {{ new Date(activity.timestamp).toLocaleDateString() }} at
+							{{ new Date(activity.timestamp).toLocaleTimeString() }}
 						</span>
 						<br />
-						{{ activity.info }}
+						{{ activity.label }}
 					</li>
 				</ol>
 			</div>
