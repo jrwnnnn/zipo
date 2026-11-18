@@ -10,7 +10,6 @@ export function txHandle(incoming: string): void {
 		}
 
 		case "TRIGGER.HIGH": {
-			addActivity("closed");
 			break;
 		}
 

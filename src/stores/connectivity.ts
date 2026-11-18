@@ -91,7 +91,6 @@ export const useConnectivityStore = defineStore("zipo", () => {
 		esp.value = { deviceId: d.deviceId, name: d.name };
 		state.value = "connected";
 
-		activityLog.addActivity("restored");
 		console.log("Connected to ", esp.value.deviceId);
 	}
 

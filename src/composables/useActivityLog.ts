@@ -15,10 +15,8 @@ interface ActivityLog {
 const activities = useStorage<Activity[]>("activities", []);
 const LABELS = {
 	triggered: "Compromised",
-	closed: "Closed",
 	connected: "Connected",
 	disconnected: "Disconnected",
-	restored: "Connection restored",
 } as const;
 
 type Status = keyof typeof LABELS;
