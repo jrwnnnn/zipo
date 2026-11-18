@@ -4,6 +4,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 import { txListen } from "@/services/characteristics";
+import { addActivity } from "@/services/logs";
 import { SERVICE_UUID } from "@/services/uuids";
 
 export const useConnectivityStore = defineStore("zipo", () => {
@@ -26,7 +27,6 @@ export const useConnectivityStore = defineStore("zipo", () => {
 					try {
 						await BleClient.stopLEScan();
 
-						// connect and listen to the found Zipo
 						await BleClient.connect(result.device.deviceId, onDisconnect);
 						await txListen(result.device.deviceId);
 
@@ -35,6 +35,10 @@ export const useConnectivityStore = defineStore("zipo", () => {
 							name: result.device.name,
 						};
 						state.value = "connected";
+						addActivity(
+							"Connected",
+							`Connected to ${result.device.name} (${result.device.deviceId})`,
+						);
 
 						console.log("Connected to", esp.value?.deviceId);
 					} catch (error) {
@@ -67,7 +71,6 @@ export const useConnectivityStore = defineStore("zipo", () => {
 	async function disconnect() {
 		if (!esp.value) return;
 		const id = esp.value.deviceId;
-		await BleClient.disconnect(id);
 		onDisconnect(id);
 	}
 
@@ -84,6 +87,10 @@ export const useConnectivityStore = defineStore("zipo", () => {
 
 		esp.value = { deviceId: d.deviceId, name: d.name };
 		state.value = "connected";
+		addActivity(
+			"Restored Connection",
+			`Reconnected to ${d.name} (${d.deviceId})`,
+		);
 
 		console.log("Connected to ", esp.value.deviceId);
 	}
@@ -93,7 +100,17 @@ export const useConnectivityStore = defineStore("zipo", () => {
 		console.log("Disconnected from", id);
 		esp.value = null;
 		state.value = "idle";
+		addActivity(
+			"Bluetooth Lost",
+			`Lost connection or reception from device ${id}`,
+		);
 	}
 
-	return { state, esp, connect, disconnect, restore };
+	return {
+		state,
+		esp,
+		connect,
+		disconnect,
+		restore,
+	};
 });

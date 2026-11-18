@@ -1,11 +1,19 @@
+import { useActivityLogs } from "@/services/activity";
+
 export function txHandle(incoming: string): void {
+	const { addActivity } = useActivityLogs();
+
 	switch (incoming) {
 		case "TRIGGER.LOW": {
-			// reed switch contact IS NOT detecting a magnetic field
+			addActivity(
+				"Compromised",
+				"Alert! Your Zipo has been opened without permission!",
+			);
 			break;
 		}
+
 		case "TRIGGER.HIGH": {
-			// reed switch contact IS detecting a magnetic field
+			addActivity("CLOSED", "Your Zipo's lid is firmly closed.");
 			break;
 		}
 
