@@ -77,21 +77,25 @@ export const useConnectivityStore = defineStore("zipo", () => {
 	}
 
 	async function restore() {
-		await BleClient.initialize();
-		const d = (await BleClient.getConnectedDevices([SERVICE_UUID])).find(
-			(d) => d.name === "Zipo",
-		);
-		if (!d) return false;
+		try {
+			await BleClient.initialize();
+			const d = (await BleClient.getConnectedDevices([SERVICE_UUID])).find(
+				(d) => d.name === "Zipo",
+			);
+			if (!d) return false;
 
-		state.value = "connecting";
+			state.value = "connecting";
 
-		await BleClient.connect(d.deviceId, onDisconnect);
-		await txListen(d.deviceId);
+			await BleClient.connect(d.deviceId, onDisconnect);
+			await txListen(d.deviceId);
 
-		esp.value = { deviceId: d.deviceId, name: d.name };
-		state.value = "connected";
+			esp.value = { deviceId: d.deviceId, name: d.name };
+			state.value = "connected";
 
-		console.log("Connected to ", esp.value.deviceId);
+			console.log("Connected to ", esp.value.deviceId);
+		} catch (error) {
+			console.error("Connection failed:", error);
+		}
 	}
 
 	function onDisconnect(id: string) {
