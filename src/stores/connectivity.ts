@@ -3,10 +3,11 @@ import { BleClient, type BleDevice } from "@capacitor-community/bluetooth-le";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
+import { useActivityLog } from "@/composables/useActivityLog";
 import { txListen } from "@/services/characteristics";
-import { addActivity } from "@/services/logs";
 import { SERVICE_UUID } from "@/services/uuids";
 
+const activityLog = useActivityLog();
 export const useConnectivityStore = defineStore("zipo", () => {
 	const state = ref<"connected" | "connecting" | "idle">("idle");
 	const esp = ref<BleDevice | null>(null);
@@ -26,7 +27,6 @@ export const useConnectivityStore = defineStore("zipo", () => {
 
 					try {
 						await BleClient.stopLEScan();
-
 						await BleClient.connect(result.device.deviceId, onDisconnect);
 						await txListen(result.device.deviceId);
 
@@ -35,14 +35,12 @@ export const useConnectivityStore = defineStore("zipo", () => {
 							name: result.device.name,
 						};
 						state.value = "connected";
-						addActivity(
-							"Connected",
-							`Connected to ${result.device.name} (${result.device.deviceId})`,
-						);
 
+						activityLog.addActivity("connected");
 						console.log("Connected to", esp.value?.deviceId);
 					} catch (error) {
 						state.value = "idle";
+
 						console.error("Connection failed:", error);
 						await Toast.show({
 							text: `Can't connect to ${esp.value?.deviceId}`,
@@ -54,8 +52,11 @@ export const useConnectivityStore = defineStore("zipo", () => {
 
 			setTimeout(async () => {
 				if (found) return;
+
 				BleClient.stopLEScan();
+
 				state.value = "idle";
+
 				console.log("No compatible Zipo device found.");
 				await Toast.show({
 					text: "No compatible Zipo device found.",
@@ -83,28 +84,22 @@ export const useConnectivityStore = defineStore("zipo", () => {
 		if (!d) return false;
 
 		state.value = "connecting";
+
 		await BleClient.connect(d.deviceId, onDisconnect);
 		await txListen(d.deviceId);
 
 		esp.value = { deviceId: d.deviceId, name: d.name };
 		state.value = "connected";
-		addActivity(
-			"Restored Connection",
-			`Reconnected to ${d.name} (${d.deviceId})`,
-		);
 
 		console.log("Connected to ", esp.value.deviceId);
 	}
 
-	// reset states
 	function onDisconnect(id: string) {
-		console.log("Disconnected from", id);
 		esp.value = null;
 		state.value = "idle";
-		addActivity(
-			"Bluetooth Lost",
-			`Lost connection or reception from device ${id}`,
-		);
+
+		activityLog.addActivity("disconnected");
+		console.log("Disconnected from", id);
 	}
 
 	return {
