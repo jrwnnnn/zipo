@@ -31,9 +31,3 @@ npm-debug.log*
 /plugins
 /state
 /www
-
-# Playwright
-/test-results/
-/playwright-report/
-/blob-report/
-/playwright/.cache/

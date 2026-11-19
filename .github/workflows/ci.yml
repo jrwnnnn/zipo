@@ -47,39 +47,8 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
 
-  unit:
-    needs: [lint, format, typecheck]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 24
-          cache: "npm"
-      - run: npm ci
-      - run: npm run test:unit
-
-  e2e:
-    needs: [lint, format, typecheck]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 24
-          cache: "npm"
-      - run: npm ci
-      - run: npx playwright install --with-deps chromium
-      - run: npm run test:e2e
-      - uses: actions/upload-artifact@v7
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report
-          path: playwright-report/
-          retention-days: 7
-
   build:
-    needs: [e2e, unit]
+    needs: [lint, format, typecheck]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7

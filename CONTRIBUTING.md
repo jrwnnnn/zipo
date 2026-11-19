@@ -61,17 +61,6 @@ The compiled APK will be at `android/app/build/outputs/apk/debug/app-debug.apk`.
 - `main` contains the latest development code.
 - Create a dedicated branch for each feature or bug fix using clear prefixes like `feat/new-feature-name` or `fix/issue-description`.
 
-### Testing
-
-Zipo uses [Vitest](https://vitest.dev/) for unit tests and [Playwright](https://playwright.dev/) for e2e tests.
-
-```bash
-npx playwright install      # install browsers for e2e tests, run this only once
-npm run test                # run all tests
-npm run test:unit           # run unit tests only
-npm run test:e2e            # run e2e tests only
-```
-
 ### Code Style
 
 This project enforces a consistent code style using [Prettier](https://prettier.io/). A [Husky](https://typicode.github.io/husky/) pre-commit hook formats your staged files automatically when you commit. CI fails if any file isn't formatted correctly.
