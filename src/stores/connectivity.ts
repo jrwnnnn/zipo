@@ -42,10 +42,6 @@ export const useConnectivityStore = defineStore("zipo", () => {
 						state.value = "idle";
 
 						console.error("Connection failed:", error);
-						await Toast.show({
-							text: `Can't connect to ${esp.value?.deviceId}`,
-							duration: "long",
-						});
 					}
 				},
 			);
