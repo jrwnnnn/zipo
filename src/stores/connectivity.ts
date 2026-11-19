@@ -8,13 +8,14 @@ import { txListen } from "@/services/characteristics";
 import { SERVICE_UUID } from "@/services/uuids";
 
 const activityLog = useActivityLog();
+let timer: ReturnType<typeof setTimeout> | undefined;
+
 export const useConnectivityStore = defineStore("connectivity", () => {
 	const state = ref<"connected" | "connecting" | "idle">("idle");
 	const esp = ref<BleDevice | null>(null);
 
 	async function connect() {
 		if (state.value !== "idle") return;
-		let found = false;
 		state.value = "connecting";
 
 		try {
@@ -22,9 +23,7 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 			await BleClient.requestLEScan(
 				{ services: [SERVICE_UUID] },
 				async (result) => {
-					if (found) return;
-					found = true;
-
+					clearTimeout(timer);
 					try {
 						await BleClient.stopLEScan();
 						await BleClient.connect(result.device.deviceId, onDisconnect);
@@ -46,8 +45,8 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 				},
 			);
 
-			setTimeout(async () => {
-				if (found) return;
+			timer = setTimeout(async () => {
+				clearTimeout(timer);
 
 				BleClient.stopLEScan();
 
