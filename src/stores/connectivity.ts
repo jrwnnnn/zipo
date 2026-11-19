@@ -8,7 +8,7 @@ import { txListen } from "@/services/characteristics";
 import { SERVICE_UUID } from "@/services/uuids";
 
 const activityLog = useActivityLog();
-export const useConnectivityStore = defineStore("zipo", () => {
+export const useConnectivityStore = defineStore("connectivity", () => {
 	const state = ref<"connected" | "connecting" | "idle">("idle");
 	const esp = ref<BleDevice | null>(null);
 
