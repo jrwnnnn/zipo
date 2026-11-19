@@ -9,7 +9,7 @@ interface Activity {
 
 interface ActivityLog {
 	activities: RemovableRef<Activity[]>;
-	addActivity: (status: Status) => void;
+	addActivity: (status: Status, id?: number) => void;
 }
 
 const activities = useStorage<Activity[]>("activities", []);
@@ -22,9 +22,9 @@ const LABELS = {
 type Status = keyof typeof LABELS;
 
 export function useActivityLog(): ActivityLog {
-	function addActivity(status: Status) {
+	function addActivity(status: Status, id?: number) {
 		activities.value.unshift({
-			id: Date.now(),
+			id: id || (Date.now() % 2_147_483_647) + 1,
 			status: status,
 			label: LABELS[status],
 			timestamp: Date.now(),
