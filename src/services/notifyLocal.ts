@@ -12,7 +12,7 @@ export async function notifyLocal(
 				title,
 				body,
 				channelId: "alerts",
-				smallIcon: "ic_zipo",
+				smallIcon: "ic_warning",
 				isExactNotification: false,
 			},
 		],
