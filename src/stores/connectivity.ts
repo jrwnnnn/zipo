@@ -5,6 +5,7 @@ import { ref } from "vue";
 
 import { useActivityLog } from "@/composables/useActivityLog";
 import { txListen } from "@/services/characteristics";
+import { keepAlive } from "@/services/keepAlive";
 import { SERVICE_UUID } from "@/services/uuids";
 
 const activityLog = useActivityLog();
@@ -28,6 +29,7 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 						await BleClient.stopLEScan();
 						await BleClient.connect(result.device.deviceId, onDisconnect);
 						await txListen(result.device.deviceId);
+						await keepAlive(true);
 
 						esp.value = {
 							deviceId: result.device.deviceId,
@@ -85,6 +87,7 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 
 			esp.value = { deviceId: d.deviceId, name: d.name };
 			state.value = "connected";
+			await keepAlive(true);
 
 			console.log("Connected to ", esp.value.deviceId);
 		} catch (error) {
@@ -92,7 +95,9 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 		}
 	}
 
-	function onDisconnect(id: string) {
+	async function onDisconnect(id: string) {
+		await keepAlive(false);
+
 		esp.value = null;
 		state.value = "idle";
 
