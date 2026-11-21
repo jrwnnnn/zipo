@@ -87,6 +87,7 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 
 			esp.value = { deviceId: d.deviceId, name: d.name };
 			state.value = "connected";
+			await keepAlive(true);
 
 			console.log("Connected to ", esp.value.deviceId);
 		} catch (error) {
