@@ -4,7 +4,7 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 
 import { useActivityLog } from "@/composables/useActivityLog";
-import { txListen } from "@/services/characteristics";
+import { characteristics } from "@/services/characteristics";
 import { keepAlive } from "@/services/keepAlive";
 import { SERVICE_UUID } from "@/services/uuids";
 
@@ -28,7 +28,7 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 					try {
 						await BleClient.stopLEScan();
 						await BleClient.connect(result.device.deviceId, onDisconnect);
-						await txListen(result.device.deviceId);
+						await characteristics.txListen(result.device.deviceId);
 						await keepAlive.start();
 
 						esp.value = {
@@ -83,7 +83,7 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 			state.value = "connecting";
 
 			await BleClient.connect(d.deviceId, onDisconnect);
-			await txListen(d.deviceId);
+			await characteristics.txListen(d.deviceId);
 
 			esp.value = { deviceId: d.deviceId, name: d.name };
 			state.value = "connected";
