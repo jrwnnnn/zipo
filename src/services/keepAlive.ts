@@ -11,15 +11,22 @@ const KEEP_ALIVE_CHANNEL_ID = "keepAlive";
 ForegroundService.addListener("buttonClicked", async (e) => {
 	if (e.buttonId === 1) {
 		const connectivity = useConnectivityStore();
-		await keepAlive(false);
+		await keepAlive.stop();
 		await connectivity.disconnect();
 	}
 });
 
-export async function keepAlive(on: boolean): Promise<void> {
-	if (!Capacitor.isNativePlatform()) return;
-	try {
-		if (on) {
+/**
+ * Controls the Android foreground service that keeps Zipo active while the app
+ * is running in the background.
+ */
+export const keepAlive = {
+	/**
+	 * Starts the foreground service.
+	 */
+	async start(): Promise<void> {
+		if (!Capacitor.isNativePlatform()) return;
+		try {
 			await ForegroundService.deleteNotificationChannel({
 				id: "default",
 			});
@@ -39,10 +46,19 @@ export async function keepAlive(on: boolean): Promise<void> {
 				serviceType: 16 as ServiceType,
 				notificationChannelId: KEEP_ALIVE_CHANNEL_ID,
 			});
-		} else {
-			await ForegroundService.stopForegroundService();
+		} catch (error) {
+			console.error("Failed to start foreground service: ", error);
 		}
-	} catch (error) {
-		console.error("Foreground service failed:", error);
-	}
-}
+	},
+
+	/**
+	 * Stops the foreground service.
+	 */
+	async stop(): Promise<void> {
+		try {
+			await ForegroundService.stopForegroundService();
+		} catch (error) {
+			console.error("Failed to stop foreground service: ", error);
+		}
+	},
+};
