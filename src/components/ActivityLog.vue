@@ -1,11 +1,9 @@
 <script setup lang="ts">
-import { useActivityLog } from "@/composables/useActivityLog";
+import { activityLog } from "@/composables/useActivityLog";
 
 import connectIcon from "@/assets/ui/connect-icon.png";
 import disconnectIcon from "@/assets/ui/disconnect-icon.png";
 import warningIcon from "@/assets/ui/warning-icon.png";
-
-const { activities } = useActivityLog();
 </script>
 
 <template>
@@ -14,7 +12,7 @@ const { activities } = useActivityLog();
 		<hr class="bg-line" />
 		<div class="flex flex-col gap-3">
 			<div
-				v-for="activity in activities"
+				v-for="activity in activityLog.getActivities().value"
 				:key="activity.id"
 				class="flex items-center gap-3"
 			>
