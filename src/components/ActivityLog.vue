@@ -23,7 +23,7 @@ import warningIcon from "@/assets/ui/warning-icon.png";
 							triggered: warningIcon,
 							connected: connectIcon,
 							disconnected: disconnectIcon,
-						}[activity.status]
+						}[activity.type]
 					"
 					class="aspect-square w-6"
 				/>
