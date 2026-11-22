@@ -12,12 +12,23 @@ import { activityLog } from "@/composables/useActivityLog";
 import connectIcon from "@/assets/ui/connect-icon.png";
 import disconnectIcon from "@/assets/ui/disconnect-icon.png";
 import warningIcon from "@/assets/ui/warning-icon.png";
+import { InAppBrowser } from "@capacitor/inappbrowser";
 
 const route = useRoute();
+
+async function openLocation() {
+	await InAppBrowser.openInExternalBrowser({
+		url: mapsUrl,
+	});
+}
+
 const activity = activityLog
 	.getActivities()
 	.value.find((activity) => activity.id === Number(route.params.eventId));
 const geolocation = activity?.geolocation;
+const mapsUrl = geolocation
+	? `https://maps.google.com/maps?q=${geolocation.latitude},${geolocation.longitude}&z=15&output=embed`
+	: "";
 </script>
 
 <template>
@@ -68,13 +79,15 @@ const geolocation = activity?.geolocation;
 							{{ geolocation.latitude >= 0 ? "E" : "W" }}
 						</p>
 					</div>
-					<iframe
-						v-if="geolocation"
-						:src="`https://maps.google.com/maps?q=${geolocation.latitude},${geolocation.longitude}&z=15&output=embed`"
-						width="100%"
-						loading="lazy"
-						class="pointer-events-none h-50 rounded-md border-none"
-					></iframe>
+
+					<div v-if="geolocation" @click="openLocation()">
+						<iframe
+							:src="mapsUrl"
+							width="100%"
+							loading="lazy"
+							class="pointer-events-none h-50 rounded-md border-none"
+						></iframe>
+					</div>
 				</div>
 			</main>
 		</ion-content>
