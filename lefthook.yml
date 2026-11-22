@@ -1,0 +1,10 @@
+pre-commit:
+  parallel: false
+  jobs:
+    - run: npx eslint --fix {staged_files}
+      glob: "*.{astro,js,ts,tsx,vue}"
+      stage_fixed: true
+
+    - run: npx prettier --write {staged_files}
+      glob: "*.{cjs,css,html,js,json,md,mjs,ts,vue,yaml,yml}"
+      stage_fixed: true
