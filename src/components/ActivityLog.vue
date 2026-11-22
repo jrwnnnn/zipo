@@ -11,11 +11,11 @@ import warningIcon from "@/assets/ui/warning-icon.png";
 		<p class="font-['Geist'] font-bold">Activity log</p>
 		<hr class="bg-line" />
 		<div class="flex flex-col gap-3">
-			<a
+			<router-link
 				v-for="activity in activityLog.getActivities().value"
 				:key="activity.id"
 				class="flex items-center gap-3"
-				:href="`/summary/${activity.id}`"
+				:to="`/summary/${activity.id}`"
 			>
 				<img
 					:src="
@@ -35,7 +35,7 @@ import warningIcon from "@/assets/ui/warning-icon.png";
 						{{ new Date(activity.timestamp).toLocaleString() }}
 					</p>
 				</div>
-			</a>
+			</router-link>
 		</div>
 	</div>
 </template>
