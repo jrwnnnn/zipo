@@ -39,7 +39,7 @@ const geolocation = activity?.geolocation;
 								triggered: warningIcon,
 								connected: connectIcon,
 								disconnected: disconnectIcon,
-							}[activity.status]
+							}[activity.type]
 						"
 						class="w-15"
 					/>
