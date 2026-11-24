@@ -9,7 +9,9 @@ export const geolocation = {
 	 */
 	async getPosition(): Promise<Position["coords"] | null> {
 		try {
-			const geolocation = await Geolocation.getCurrentPosition();
+			const geolocation = await Geolocation.getCurrentPosition({
+				maximumAge: 10000,
+			});
 			return geolocation.coords;
 		} catch (error) {
 			console.error("Failed to get current position:", error);
