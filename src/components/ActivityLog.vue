@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { activityLog } from "@/composables/useActivityLog";
+import { activityLog } from "@/stores/activityLog";
 
 import connectIcon from "@/assets/ui/connect-icon.png";
 import disconnectIcon from "@/assets/ui/disconnect-icon.png";
