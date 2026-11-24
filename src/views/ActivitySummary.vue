@@ -8,7 +8,7 @@ import {
 	IonToolbar,
 } from "@ionic/vue";
 import { useRoute } from "vue-router";
-import { activityLog } from "@/composables/useActivityLog";
+import { activityLog } from "@/stores/activityLog";
 import connectIcon from "@/assets/ui/connect-icon.png";
 import disconnectIcon from "@/assets/ui/disconnect-icon.png";
 import warningIcon from "@/assets/ui/warning-icon.png";
