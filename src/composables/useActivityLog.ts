@@ -1,10 +1,15 @@
-import { useStorage, type RemovableRef } from "@vueuse/core";
+import { type RemovableRef, useStorage } from "@vueuse/core";
+
+import { type Coords } from "@/services/geolocation";
+
+type ActivityType = keyof typeof LABELS;
 
 interface Activity {
 	id: number;
-	status: string;
+	type: ActivityType;
 	label: string;
 	timestamp: number;
+	geolocation: Coords | null;
 }
 
 const activities = useStorage<Activity[]>("activities", []);
@@ -12,24 +17,29 @@ const LABELS = {
 	triggered: "Compromised",
 	connected: "Connected",
 	disconnected: "Disconnected",
-} as const;
-
-type Status = keyof typeof LABELS;
+};
 
 export const activityLog = {
 	/**
 	 * Adds a new entry to the  activity log.
 	 *
 	 * @param status - Activity type used to determine the displayed label.
-	 * @param id - Optional entry ID. A generated numeric ID is used when omitted.
 	 */
-	addActivity(status: Status, id?: number): void {
+	async addActivity(
+		type: ActivityType,
+		geolocation?: Coords | null,
+	): Promise<number> {
+		const id = (Date.now() % 2_147_483_647) + 1;
+
 		activities.value.unshift({
-			id: id || (Date.now() % 2_147_483_647) + 1,
-			status: status,
-			label: LABELS[status],
+			id,
+			type,
+			label: LABELS[type],
 			timestamp: Date.now(),
+			geolocation: geolocation || null,
 		});
+
+		return id;
 	},
 
 	getActivities(): RemovableRef<Activity[]> {

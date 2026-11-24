@@ -1,31 +1,27 @@
 import { Haptics } from "@capacitor/haptics";
 
 import { activityLog } from "@/composables/useActivityLog";
+import { geolocation } from "@/services/geolocation";
 import { notifyLocal } from "@/services/notifyLocal";
 
-let id: number;
-
 /**
- * Processes a protocol message received from the Zipo device.
- *
- * `TRIGGER.LOW` records a compromised event, schedules a local alert, and
- * vibrates the device for three seconds. `TRIGGER.HIGH` is reserved and
- * currently has no behavior. Other messages are ignored with a warning.
+ * Processes a trigger message received from the Zipo device.
  *
  * @param incoming - Message received from the BLE TX characteristic.
  */
 export async function txHandle(incoming: string): Promise<void> {
 	switch (incoming) {
 		case "TRIGGER.LOW": {
-			id = (Date.now() % 2_147_483_647) + 1;
+			const id = await activityLog.addActivity(
+				"triggered",
+				await geolocation.getPosition(),
+			);
 
-			activityLog.addActivity("triggered", id);
 			await notifyLocal(
 				id,
 				"Zipo triggered",
 				`Detected at ${new Date().toLocaleTimeString()}`,
 			);
-
 			await Haptics.vibrate({ duration: 3000 });
 			break;
 		}

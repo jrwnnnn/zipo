@@ -11,33 +11,31 @@ import warningIcon from "@/assets/ui/warning-icon.png";
 		<p class="font-['Geist'] font-bold">Activity log</p>
 		<hr class="bg-line" />
 		<div class="flex flex-col gap-3">
-			<div
+			<router-link
 				v-for="activity in activityLog.getActivities().value"
 				:key="activity.id"
 				class="flex items-center gap-3"
+				:to="`/summary/${activity.id}`"
 			>
 				<img
 					:src="
-						activity.status === 'connected'
-							? connectIcon
-							: activity.status === 'triggered'
-								? warningIcon
-								: disconnectIcon
+						{
+							triggered: warningIcon,
+							connected: connectIcon,
+							disconnected: disconnectIcon,
+						}[activity.type]
 					"
 					class="aspect-square w-6"
 				/>
 				<div>
-					<p
-						class="font-[Geist]"
-						:class="activity.status === 'triggered' ? 'text-red-500' : ''"
-					>
+					<p class="font-[Geist] text-white">
 						{{ activity.label }}
 					</p>
 					<p class="text-muted text-xs">
 						{{ new Date(activity.timestamp).toLocaleString() }}
 					</p>
 				</div>
-			</div>
+			</router-link>
 		</div>
 	</div>
 </template>

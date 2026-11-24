@@ -16,10 +16,6 @@ ForegroundService.addListener("buttonClicked", async (e) => {
 	}
 });
 
-/**
- * Controls the Android foreground service that keeps Zipo active while the app
- * is running in the background.
- */
 export const keepAlive = {
 	/**
 	 * Starts the foreground service.
@@ -43,7 +39,7 @@ export const keepAlive = {
 				title: "Zipo is running",
 				body: "Tap to disconnect",
 				smallIcon: "ic_zipo",
-				serviceType: 16 as ServiceType,
+				serviceType: 24 as ServiceType,
 				notificationChannelId: KEEP_ALIVE_CHANNEL_ID,
 			});
 		} catch (error) {

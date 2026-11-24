@@ -1,11 +1,7 @@
 <script setup lang="ts">
 import { useConnectivityStore } from "@/stores/connectivity";
-import { onMounted } from "vue";
 
 const connectivity = useConnectivityStore();
-onMounted(() => {
-	connectivity.restore();
-});
 </script>
 
 <template>
