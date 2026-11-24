@@ -1,4 +1,4 @@
-import { useStorage } from "@vueuse/core";
+import { useStorage, type RemovableRef } from "@vueuse/core";
 
 interface Activity {
 	id: number;
@@ -23,7 +23,7 @@ export const activityLog = {
 	 * @param status - Activity type used to determine the displayed label.
 	 * @param id - Optional entry ID. A generated numeric ID is used when omitted.
 	 */
-	addActivity(status: Status, id?: number) {
+	addActivity(status: Status, id?: number): void {
 		activities.value.unshift({
 			id: id || (Date.now() % 2_147_483_647) + 1,
 			status: status,
@@ -32,7 +32,7 @@ export const activityLog = {
 		});
 	},
 
-	getActivities() {
+	getActivities(): RemovableRef<Activity[]> {
 		return activities;
 	},
 };
