@@ -1,8 +1,8 @@
 import { Haptics } from "@capacitor/haptics";
 
-import { activityLog } from "@/composables/useActivityLog";
 import { geolocation } from "@/services/geolocation";
 import { notifyLocal } from "@/services/notifyLocal";
+import { activityLog } from "@/stores/activityLog";
 
 /**
  * Processes a trigger message received from the Zipo device.
