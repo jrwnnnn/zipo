@@ -23,7 +23,9 @@ export const activityLog = {
 	/**
 	 * Adds a new entry to the  activity log.
 	 *
-	 * @param status - Activity type used to determine the displayed label.
+	 * @param type - Activity type used to determine the displayed label.
+	 * @param geolocation - Optional coordinates associated with the activity.
+	 * @returns The ID assigned to the newly created activity.
 	 */
 	async addActivity(
 		type: ActivityType,
