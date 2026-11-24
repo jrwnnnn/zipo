@@ -3,12 +3,11 @@ import { BleClient, type BleDevice } from "@capacitor-community/bluetooth-le";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import { useActivityLog } from "@/composables/useActivityLog";
+import { activityLog } from "@/composables/useActivityLog";
 import { characteristics } from "@/services/characteristics";
 import { keepAlive } from "@/services/keepAlive";
 import { SERVICE_UUID } from "@/services/uuids";
 
-const activityLog = useActivityLog();
 let timer: ReturnType<typeof setTimeout> | undefined;
 
 export const useConnectivityStore = defineStore("connectivity", () => {

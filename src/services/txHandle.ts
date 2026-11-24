@@ -1,9 +1,8 @@
 import { Haptics } from "@capacitor/haptics";
 
-import { useActivityLog } from "@/composables/useActivityLog";
+import { activityLog } from "@/composables/useActivityLog";
 import { notifyLocal } from "@/services/notifyLocal";
 
-const { addActivity } = useActivityLog();
 let id: number;
 
 /**
@@ -20,7 +19,7 @@ export async function txHandle(incoming: string): Promise<void> {
 		case "TRIGGER.LOW": {
 			id = (Date.now() % 2_147_483_647) + 1;
 
-			addActivity("triggered", id);
+			activityLog.addActivity("triggered", id);
 			await notifyLocal(
 				id,
 				"Zipo triggered",
