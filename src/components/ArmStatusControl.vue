@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import { armControls } from "@/services/armState";
+import { useZipoStore } from "@/stores/zipo";
 
-const isArmed = armControls.isArmed;
+const zipo = useZipoStore();
 
 const shape = [
 	"001111100",
@@ -35,7 +35,7 @@ const shapeOut = [
 	"111111111",
 ];
 
-const currentShape = computed(() => (isArmed.value ? shape : shapeOut));
+const currentShape = computed(() => (zipo.isArmed ? shape : shapeOut));
 </script>
 
 <template>
@@ -44,12 +44,12 @@ const currentShape = computed(() => (isArmed.value ? shape : shapeOut));
 			class="flex aspect-square items-center justify-center rounded-full bg-white"
 		>
 			<button
-				@click="armControls.toggleArmState()"
+				@click="zipo.arm()"
 				class="bg-primary relative flex h-3/4 w-3/4 items-center justify-center rounded-full"
 			>
 				<Transition name="fade" mode="out-in">
 					<div
-						:key="isArmed ? 'armed' : 'unarmed'"
+						:key="zipo.isArmed ? 'armed' : 'unarmed'"
 						class="absolute flex translate-y-0 flex-col items-center"
 					>
 						<!-- Shape -->
@@ -61,7 +61,7 @@ const currentShape = computed(() => (isArmed.value ? shape : shapeOut));
 									class="h-1.5 w-1.5 rounded-full"
 									:class="
 										dot === '1'
-											? isArmed
+											? zipo.isArmed
 												? 'bg-red-500'
 												: 'bg-black'
 											: 'bg-transparent'
@@ -72,9 +72,9 @@ const currentShape = computed(() => (isArmed.value ? shape : shapeOut));
 
 						<p
 							class="mt-3 mb-0 font-[Geist] text-lg font-bold"
-							:class="isArmed ? 'text-red-500' : 'text-black'"
+							:class="zipo.isArmed ? 'text-red-500' : 'text-black'"
 						>
-							{{ isArmed ? "Locked" : "Unlocked" }}
+							{{ zipo.isArmed ? "Locked" : "Unlocked" }}
 						</p>
 					</div>
 				</Transition>
