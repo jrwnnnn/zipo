@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from "@ionic/vue-router";
 import type { RouteRecordRaw } from "vue-router";
 
-import AcitivitySummary from "../views/ActivitySummary.vue";
 import HomePage from "../views/HomePage.vue";
 
 const routes: RouteRecordRaw[] = [
@@ -10,11 +9,6 @@ const routes: RouteRecordRaw[] = [
 		redirect: "/home",
 	},
 	{ path: "/home", name: "Home", component: HomePage },
-	{
-		path: "/summary/:eventId",
-		name: "ActivitySummary",
-		component: AcitivitySummary,
-	},
 ];
 
 const router = createRouter({
