@@ -3,7 +3,6 @@ import { BleClient, type BleDevice } from "@capacitor-community/bluetooth-le";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import { useActivityLog } from "@/composables/useActivityLog";
 import { armControls } from "@/services/armState";
 import { characteristics } from "@/services/characteristics";
 import { keepAlive } from "@/services/keepAlive";

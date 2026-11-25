@@ -1,6 +1,5 @@
 import { Haptics } from "@capacitor/haptics";
 
-import { useActivityLog } from "@/composables/useActivityLog";
 import { isArmed } from "@/services/armStatus";
 import { geolocation } from "@/services/geolocation";
 import { notifyLocal } from "@/services/notifyLocal";
