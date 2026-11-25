@@ -8,8 +8,8 @@ import { armControls } from "@/services/armState";
 import { characteristics } from "@/services/characteristics";
 import { keepAlive } from "@/services/keepAlive";
 import { SERVICE_UUID } from "@/services/uuids";
+import { activityLog } from "@/stores/activityLog";
 
-const activityLog = useActivityLog();
 let timer: ReturnType<typeof setTimeout> | undefined;
 
 export const useConnectivityStore = defineStore("connectivity", () => {
