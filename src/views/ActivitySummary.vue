@@ -13,6 +13,8 @@ import connectIcon from "@/assets/ui/connect-icon.png";
 import disconnectIcon from "@/assets/ui/disconnect-icon.png";
 import warningIcon from "@/assets/ui/warning-icon.png";
 import { InAppBrowser } from "@capacitor/inappbrowser";
+import armedIcon from "@/assets/ui/armed-icon.png";
+import disarmedIcon from "@/assets/ui/disarmed-icon.png";
 
 const route = useRoute();
 
@@ -50,6 +52,8 @@ const mapsUrl = geolocation
 								triggered: warningIcon,
 								connected: connectIcon,
 								disconnected: disconnectIcon,
+								armed: armedIcon,
+								disarmed: disarmedIcon,
 							}[activity.type]
 						"
 						class="w-15"
