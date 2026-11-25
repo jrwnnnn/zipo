@@ -17,6 +17,8 @@ const LABELS = {
 	triggered: "Compromised",
 	connected: "Connected",
 	disconnected: "Disconnected",
+	armed: "Armed",
+	disarmed: "Disarmed",
 };
 
 export const activityLog = {
