@@ -30,14 +30,16 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 						await BleClient.stopLEScan();
 						await BleClient.connect(result.device.deviceId, onDisconnect);
 						await characteristics.txListen(result.device.deviceId);
-						await armControls.syncArmState();
-						await keepAlive.start();
 
 						esp.value = {
 							deviceId: result.device.deviceId,
 							name: result.device.name,
 						};
+
 						state.value = "connected";
+
+						await armControls.syncArmState();
+						await keepAlive.start();
 
 						activityLog.addActivity("connected");
 						console.log("Connected to", esp.value?.deviceId);
@@ -86,10 +88,10 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 
 			await BleClient.connect(d.deviceId, onDisconnect);
 			await characteristics.txListen(d.deviceId);
-			await armControls.syncArmState();
 
 			esp.value = { deviceId: d.deviceId, name: d.name };
 			state.value = "connected";
+			await armControls.syncArmState();
 			await keepAlive.start();
 
 			console.log("Restored connection to ", esp.value.deviceId);
