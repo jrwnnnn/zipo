@@ -6,6 +6,11 @@ import { characteristics } from "@/services/characteristics";
 export const useZipoStore = defineStore("zipo", () => {
 	const isArmed = ref(false);
 
+	/**
+	 * Arms the connected Zipo.
+	 *
+	 * @returns `true` if the command is sent successfully; otherwise, `false`.
+	 */
 	async function arm(): Promise<boolean> {
 		const success = await characteristics.rxSend("ARM");
 
@@ -15,6 +20,11 @@ export const useZipoStore = defineStore("zipo", () => {
 		return true;
 	}
 
+	/**
+	 * Disarms the connected Zipo.
+	 *
+	 * @returns `true` if the command is sent successfully; otherwise, `false`.
+	 */
 	async function unarm(): Promise<boolean> {
 		const success = await characteristics.rxSend("DISARM");
 
@@ -24,6 +34,12 @@ export const useZipoStore = defineStore("zipo", () => {
 		return true;
 	}
 
+	/**
+	 * Updates the client’s settings from the connected Zipo.
+	 * Fired every connect/reconnect.
+	 *
+	 * @returns `true` if the command is sent successfully; otherwise, `false`.
+	 */
 	async function sync(): Promise<boolean> {
 		const success = await characteristics.rxSend("SYNC");
 
