@@ -1,8 +1,13 @@
-import { ref } from "vue";
-
+import { isArmed } from "@/services/armStatus";
 import { characteristics } from "@/services/characteristics";
 
-const isArmed = ref(false);
+/**
+ * Waits for BLE Write to send either true or false.
+ * Sends the appropriate protocol command and updates the local state
+ *
+ * @property isArmed - Reactive state indicating whether the device is armed.
+ * @exports STATE.GET - sends the data to cahracteristics.ts to handle
+ */
 
 export const armControls = {
 	isArmed,
@@ -31,5 +36,9 @@ export const armControls = {
 		} else {
 			await this.armState();
 		}
+	},
+
+	async syncArmState(): Promise<boolean> {
+		return await characteristics.rxSend("STATE.GET");
 	},
 };

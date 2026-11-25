@@ -1,13 +1,14 @@
 import { Haptics } from "@capacitor/haptics";
 
 import { useActivityLog } from "@/composables/useActivityLog";
+import { isArmed } from "@/services/armStatus";
 import { notifyLocal } from "@/services/notifyLocal";
 
 const { addActivity } = useActivityLog();
 let id: number;
 
 /**
- * Processes a protocol message received from the Zipo device.
+ * ARM - DISARMED for ESP32 to manage and call back
  *
  * `TRIGGER.LOW` records a compromised event, schedules a local alert, and
  * vibrates the device for three seconds. `TRIGGER.HIGH` is reserved and
@@ -15,8 +16,19 @@ let id: number;
  *
  * @param incoming - Message received from the BLE TX characteristic.
  */
+
 export async function txHandle(incoming: string): Promise<void> {
 	switch (incoming) {
+		case "STATE.ARMED": {
+			isArmed.value = true;
+			break;
+		}
+
+		case "STATE.DISARMED": {
+			isArmed.value = false;
+			break;
+		}
+
 		case "TRIGGER.LOW": {
 			id = (Date.now() % 2_147_483_647) + 1;
 

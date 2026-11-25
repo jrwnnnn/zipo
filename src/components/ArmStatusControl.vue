@@ -1,8 +1,41 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed } from "vue";
 import { armControls } from "@/services/armState";
 
-const isArmed = ref(false);
+const isArmed = armControls.isArmed;
+
+const shape = [
+	"001111100",
+	"011000110",
+	"110000011",
+	"110000011",
+	"110000011",
+	"111111111",
+	"111111111",
+	"110000011",
+	"110000011",
+	"110000011",
+	"111111111",
+	"111111111",
+];
+
+const shapeOut = [
+	"001111100",
+	"011000110",
+	"110000011",
+	"100000011",
+	"000000011",
+	"000000011",
+	"111111111",
+	"111111111",
+	"110000011",
+	"110000011",
+	"110000011",
+	"111111111",
+	"111111111",
+];
+
+const currentShape = computed(() => (isArmed.value ? shape : shapeOut));
 </script>
 
 <template>
@@ -12,12 +45,56 @@ const isArmed = ref(false);
 		>
 			<button
 				@click="armControls.toggleArmState()"
-				class="bg-primary flex h-3/4 w-3/4 items-center justify-center rounded-full font-['Geist'] font-bold text-black"
+				class="bg-primary relative flex h-3/4 w-3/4 items-center justify-center rounded-full"
 			>
-				<p class="font-[Geist] text-2xl">
-					{{ isArmed ? "State: Armed" : "State: Unarmed" }}
-				</p>
+				<Transition name="fade" mode="out-in">
+					<div
+						:key="isArmed ? 'armed' : 'unarmed'"
+						class="absolute flex translate-y-0 flex-col items-center"
+					>
+						<!-- Shape -->
+						<div class="grid grid-cols-9 gap-1">
+							<template v-for="(row, y) in currentShape" :key="y">
+								<div
+									v-for="(dot, x) in row"
+									:key="x"
+									class="h-1.5 w-1.5 rounded-full"
+									:class="
+										dot === '1'
+											? isArmed
+												? 'bg-red-500'
+												: 'bg-black'
+											: 'bg-transparent'
+									"
+								></div>
+							</template>
+						</div>
+
+						<p
+							class="mt-3 mb-0 font-[Geist] text-lg font-bold"
+							:class="isArmed ? 'text-red-500' : 'text-black'"
+						>
+							{{ isArmed ? "Locked" : "Unlocked" }}
+						</p>
+					</div>
+				</Transition>
+				<p>Lock</p>
 			</button>
 		</div>
 	</main>
 </template>
+
+<style scoped>
+.fade-enter-active {
+	transition: opacity 0.3s ease;
+}
+
+.fade-leave-active {
+	transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+	opacity: 0.4;
+}
+</style>
