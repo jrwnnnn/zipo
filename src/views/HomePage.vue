@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ConnectionStatus from "@/components/ConnectionStatus.vue";
+import DotMatrix from "@/components/DotMatrix.vue";
 import RssiComponent from "@/components/RssiComponent.vue";
 import {
 	IonContent,
@@ -27,7 +27,7 @@ import ArmControls from "@/components/ArmStatusControl.vue";
 			</ion-header>
 
 			<main class="flex min-h-full flex-col gap-3">
-				<ConnectionStatus />
+				<DotMatrix />
 
 				<section class="grid grid-cols-2 gap-2">
 					<ArmControls />
