@@ -6,14 +6,9 @@ import { notifyLocal } from "@/services/notifyLocal";
 import { activityLog } from "@/stores/activityLog";
 
 /**
- * ARM - DISARMED for ESP32 to manage and call back
+ * Processes a command received from the Zipo device.
  *
- * `TRIGGER.LOW` records a compromised event, schedules a local alert, and
- * vibrates the device for three seconds. `TRIGGER.HIGH` is reserved and
- * currently has no behavior. Other messages are ignored with a warning.
- * Processes a trigger message received from the Zipo device.
- *
- * @param incoming - Message received from the BLE TX characteristic.
+ * @param incoming - Command received from the BLE TX characteristic.
  */
 
 export async function txHandle(incoming: string): Promise<void> {

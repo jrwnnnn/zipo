@@ -32,7 +32,6 @@ export const characteristics = {
 	},
 
 	/**
-	 * Added try-catch to not trigger armState without connection
 	 * Sends a message to the Zipo device RX characteristic.
 	 * Ignored if no device is connected.
 	 *

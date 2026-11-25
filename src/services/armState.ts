@@ -6,7 +6,6 @@ import { characteristics } from "@/services/characteristics";
  * Sends the appropriate protocol command and updates the local state
  *
  * @property isArmed - Reactive state indicating whether the device is armed.
- * @exports STATE.GET - sends the data to cahracteristics.ts to handle
  */
 
 export const armControls = {

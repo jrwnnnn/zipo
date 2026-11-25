@@ -90,6 +90,7 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 
 			esp.value = { deviceId: d.deviceId, name: d.name };
 			state.value = "connected";
+
 			await armControls.syncArmState();
 			await keepAlive.start();
 
