@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DotMatrix from "@/components/DotMatrix.vue";
 import RssiComponent from "@/components/RssiComponent.vue";
+import ZipoControls from "@/components/ZipoControls.vue";
 import {
 	IonContent,
 	IonHeader,
@@ -9,7 +10,6 @@ import {
 	IonToolbar,
 } from "@ionic/vue";
 import ActivityLog from "@/components/ActivityLog.vue";
-import ArmControls from "@/components/ArmStatusControl.vue";
 </script>
 
 <template>
@@ -26,11 +26,12 @@ import ArmControls from "@/components/ArmStatusControl.vue";
 				</ion-toolbar>
 			</ion-header>
 
-			<main class="flex min-h-full flex-col gap-3">
+			<main class="flex min-h-full flex-col gap-2">
 				<DotMatrix />
 
+				<ZipoControls />
 				<section class="grid grid-cols-2 gap-2">
-					<ArmControls />
+					<div class="card aspect-square"></div>
 					<RssiComponent />
 				</section>
 
