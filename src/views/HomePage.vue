@@ -9,6 +9,7 @@ import {
 	IonToolbar,
 } from "@ionic/vue";
 import ActivityLog from "@/components/ActivityLog.vue";
+import ArmControls from "@/components/ArmStatusControl.vue";
 </script>
 
 <template>
@@ -29,9 +30,7 @@ import ActivityLog from "@/components/ActivityLog.vue";
 				<ConnectionStatus />
 
 				<section class="grid grid-cols-2 gap-2">
-					<div
-						class="flex aspect-square items-center justify-center rounded-full bg-white"
-					></div>
+					<ArmControls />
 					<RssiComponent />
 				</section>
 
