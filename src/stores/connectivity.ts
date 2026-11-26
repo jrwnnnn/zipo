@@ -7,6 +7,7 @@ import { useAlertStateStore } from "./alertState";
 
 import { characteristics } from "@/services/characteristics";
 import { keepAlive } from "@/services/keepAlive";
+import { sync } from "@/services/sync";
 import { SERVICE_UUID } from "@/services/uuids";
 import { activityLog } from "@/stores/activityLog";
 
@@ -39,7 +40,7 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 
 						state.value = "connected";
 
-						await alertState.sync();
+						await sync();
 						await keepAlive.start();
 
 						activityLog.addActivity("connected");
@@ -93,7 +94,7 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 			esp.value = { deviceId: d.deviceId, name: d.name };
 			state.value = "connected";
 
-			await alertState.sync();
+			await sync();
 			await keepAlive.start();
 
 			console.log("Restored connection to ", esp.value.deviceId);
