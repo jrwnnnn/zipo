@@ -43,6 +43,11 @@ export const activityLog = {
 		return id;
 	},
 
+	setGeolocation(id: number, geolocation: Coords | null): void {
+		const activity = activities.value.find((a) => a.id === id);
+		if (activity) activity.geolocation = geolocation;
+	},
+
 	getActivities(): RemovableRef<Activity[]> {
 		return activities;
 	},
