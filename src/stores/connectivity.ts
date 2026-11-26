@@ -1,7 +1,7 @@
 import { Toast } from "@capacitor/toast";
 import { BleClient, type BleDevice } from "@capacitor-community/bluetooth-le";
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 import { useAlertStateStore } from "./alertState";
 
@@ -16,6 +16,10 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 	const alertState = useAlertStateStore();
 	const state = ref<"connected" | "connecting" | "idle">("idle");
 	const esp = ref<BleDevice | null>(null);
+
+	watch(state, (connectionState) => {
+		if (connectionState !== "connected") alertState.isArmed = false;
+	});
 
 	async function connect() {
 		if (state.value !== "idle") return;
