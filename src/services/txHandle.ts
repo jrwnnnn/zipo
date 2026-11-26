@@ -42,15 +42,14 @@ export async function txHandle(incoming: string): Promise<void> {
 		}
 
 		case "TRIGGER.LOW": {
-			const id = await activityLog.addActivity(
-				"triggered",
-				await geolocation.getPosition(),
-			);
+			const id = await activityLog.addActivity("triggered");
 
-			if (alertMode.mode === "zipo") break;
+			if (alertMode.mode !== "zipo") {
+				await notifyLocal(id, "Zipo triggered", "Tap to view");
+				await Haptics.vibrate({ duration: 3000 });
+			}
 
-			await notifyLocal(id, "Zipo triggered", "Tap to view");
-			await Haptics.vibrate({ duration: 3000 });
+			activityLog.setGeolocation(id, await geolocation.getPosition());
 			break;
 		}
 
