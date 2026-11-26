@@ -10,6 +10,7 @@ import {
 	IonToolbar,
 } from "@ionic/vue";
 import ActivityLog from "@/components/ActivityLog.vue";
+import AlertMode from "@/components/AlertMode.vue";
 </script>
 
 <template>
@@ -28,13 +29,12 @@ import ActivityLog from "@/components/ActivityLog.vue";
 
 			<main class="flex min-h-full flex-col gap-2">
 				<DotMatrix />
-
 				<ZipoControls />
 				<section class="grid grid-cols-2 gap-2">
 					<div class="card aspect-square"></div>
 					<RssiComponent />
 				</section>
-
+				<AlertMode />
 				<ActivityLog />
 			</main>
 		</ion-content>
