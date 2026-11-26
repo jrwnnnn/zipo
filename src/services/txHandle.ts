@@ -4,7 +4,7 @@ import { geolocation } from "@/services/geolocation";
 import { notifyLocal } from "@/services/notifyLocal";
 import { activityLog } from "@/stores/activityLog";
 import { useAlertModeStore } from "@/stores/alertMode";
-import { useZipoStore } from "@/stores/zipo";
+import { useAlertStateStore } from "@/stores/alertState";
 
 /**
  * Processes a command received from the Zipo device.
@@ -12,17 +12,17 @@ import { useZipoStore } from "@/stores/zipo";
  * @param incoming - Command received from the BLE TX characteristic.
  */
 export async function txHandle(incoming: string): Promise<void> {
-	const zipo = useZipoStore();
+	const alertState = useAlertStateStore();
 	const alertMode = useAlertModeStore();
 
 	switch (incoming) {
 		case "STATE.ARMED": {
-			zipo.isArmed = true;
+			alertState.isArmed = true;
 			break;
 		}
 
 		case "STATE.DISARMED": {
-			zipo.isArmed = false;
+			alertState.isArmed = false;
 			break;
 		}
 
