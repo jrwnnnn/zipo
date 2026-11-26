@@ -8,11 +8,6 @@ onMounted(async () => {
 	await useConnectivityStore().restore();
 
 	await LocalNotifications.requestPermissions();
-	await LocalNotifications.createChannel({
-		id: "alerts",
-		name: "Alerts",
-		importance: 5,
-	});
 });
 </script>
 
