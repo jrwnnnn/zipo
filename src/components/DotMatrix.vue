@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, computed } from "vue";
+import { ref, computed } from "vue";
 import { useIntervalFn } from "@vueuse/core";
 import { useConnectivityStore } from "@/stores/connectivity";
 import { useAlertStateStore } from "@/stores/alertState";
@@ -178,13 +178,6 @@ const frame = ref(0);
 useIntervalFn(() => {
 	frame.value += Math.sign(target.value - frame.value);
 }, 70);
-
-watch(
-	() => connectivity.state,
-	(state) => {
-		if (state !== "connected") alertState.isArmed = false;
-	},
-);
 </script>
 
 <template>
