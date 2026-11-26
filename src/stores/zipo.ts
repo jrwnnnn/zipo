@@ -10,8 +10,6 @@ export const useZipoStore = defineStore("zipo", () => {
 	/**
 	 * Arms the connected Zipo.
 	 * Creates an "armed" activity entry in the activity log.
-	 *
-	 * @returns `true` if the command is sent successfully; otherwise, `false`.
 	 */
 	async function arm(): Promise<void> {
 		try {
@@ -27,8 +25,6 @@ export const useZipoStore = defineStore("zipo", () => {
 	/**
 	 * Disarms the connected Zipo.
 	 * Creates a "disarmed" activity entry in the activity log.
-	 *
-	 * @returns `true` if the command is sent successfully; otherwise, `false`.
 	 */
 	async function unarm(): Promise<void> {
 		try {
@@ -44,8 +40,6 @@ export const useZipoStore = defineStore("zipo", () => {
 	/**
 	 * Updates the client’s settings from the connected Zipo.
 	 * Fired every connect/reconnect.
-	 *
-	 * @returns `true` if the command is sent successfully; otherwise, `false`.
 	 */
 	async function sync(): Promise<void> {
 		try {
