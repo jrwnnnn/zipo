@@ -3,7 +3,7 @@ import { BleClient, type BleDevice } from "@capacitor-community/bluetooth-le";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import { useZipoStore } from "./zipo";
+import { useAlertStateStore } from "./alertState";
 
 import { characteristics } from "@/services/characteristics";
 import { keepAlive } from "@/services/keepAlive";
@@ -13,7 +13,7 @@ import { activityLog } from "@/stores/activityLog";
 let timer: ReturnType<typeof setTimeout> | undefined;
 
 export const useConnectivityStore = defineStore("connectivity", () => {
-	const zipo = useZipoStore();
+	const alertState = useAlertStateStore();
 	const state = ref<"connected" | "connecting" | "idle">("idle");
 	const esp = ref<BleDevice | null>(null);
 
@@ -39,7 +39,7 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 
 						state.value = "connected";
 
-						await zipo.sync();
+						await alertState.sync();
 						await keepAlive.start();
 
 						activityLog.addActivity("connected");
@@ -93,7 +93,7 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 			esp.value = { deviceId: d.deviceId, name: d.name };
 			state.value = "connected";
 
-			await zipo.sync();
+			await alertState.sync();
 			await keepAlive.start();
 
 			console.log("Restored connection to ", esp.value.deviceId);

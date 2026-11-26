@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useConnectivityStore } from "@/stores/connectivity";
-import { useZipoStore } from "@/stores/zipo";
+import { useAlertStateStore } from "@/stores/alertState";
 
 const connectivity = useConnectivityStore();
-const zipo = useZipoStore();
+const alertState = useAlertStateStore();
 
 async function toggleConnectivity() {
 	if (connectivity.state === "connecting") return;
@@ -12,8 +12,8 @@ async function toggleConnectivity() {
 }
 
 async function toggleModes() {
-	if (!zipo.isArmed) await zipo.arm();
-	else await zipo.unarm();
+	if (!alertState.isArmed) await alertState.arm();
+	else await alertState.unarm();
 }
 </script>
 
@@ -23,10 +23,10 @@ async function toggleModes() {
 			type="button"
 			v-if="connectivity.state === 'connected'"
 			class="card w-full rounded-full!"
-			:class="zipo.isArmed ? 'text-red-600' : ''"
+			:class="alertState.isArmed ? 'text-red-600' : ''"
 			@click="toggleModes()"
 		>
-			{{ zipo.isArmed ? "Disarm" : "Arm" }}
+			{{ alertState.isArmed ? "Disarm" : "Arm" }}
 		</button>
 
 		<button
