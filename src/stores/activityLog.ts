@@ -29,10 +29,7 @@ export const activityLog = {
 	 * @param geolocation - Optional coordinates associated with the activity.
 	 * @returns The ID assigned to the newly created activity.
 	 */
-	async addActivity(
-		type: ActivityType,
-		geolocation?: Coords | null,
-	): Promise<number> {
+	addActivity(type: ActivityType, geolocation?: Coords | null): number {
 		const id = (Date.now() % 2_147_483_647) + 1;
 
 		activities.value.unshift({
