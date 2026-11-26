@@ -37,23 +37,16 @@ export const characteristics = {
 	 *
 	 * @param outgoing - Message to send to the Zipo device.
 	 */
-	async rxSend(outgoing: string): Promise<boolean> {
+	async rxSend(outgoing: string): Promise<void> {
 		const connectivity = useConnectivityStore();
 
-		if (!connectivity.esp) return false;
+		if (!connectivity.esp) return;
 
-		try {
-			await BleClient.write(
-				connectivity.esp.deviceId,
-				SERVICE_UUID,
-				RX_UUID,
-				textToDataView(outgoing),
-			);
-
-			return true;
-		} catch (error) {
-			console.error("BLE Write failed: ", error);
-			return false;
-		}
+		await BleClient.write(
+			connectivity.esp.deviceId,
+			SERVICE_UUID,
+			RX_UUID,
+			textToDataView(outgoing),
+		);
 	},
 };

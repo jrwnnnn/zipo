@@ -15,12 +15,13 @@ export const useAlertModeStore = defineStore("alert mode", () => {
 	 * @param m - Alert mode to activate.
 	 */
 	async function switchMode(m: AlertMode): Promise<void> {
-		const success = await characteristics.rxSend(`MODE.${m.toUpperCase()}`);
-
-		if (!success) return;
-
-		mode.value = m;
-		return;
+		try {
+			await characteristics.rxSend(`MODE.${m.toUpperCase()}`);
+			mode.value = m;
+		} catch (error) {
+			console.error("Failed to switch alert mode: ", error);
+			return;
+		}
 	}
 
 	return {

@@ -10,50 +10,44 @@ export const useZipoStore = defineStore("zipo", () => {
 	/**
 	 * Arms the connected Zipo.
 	 * Creates an "armed" activity entry in the activity log.
-	 *
-	 * @returns `true` if the command is sent successfully; otherwise, `false`.
 	 */
-	async function arm(): Promise<boolean> {
-		const success = await characteristics.rxSend("ARM");
-
-		if (!success) return false;
-
-		activityLog.addActivity("armed");
-
-		isArmed.value = true;
-		return true;
+	async function arm(): Promise<void> {
+		try {
+			await characteristics.rxSend("ARM");
+			activityLog.addActivity("armed");
+			isArmed.value = true;
+		} catch (error) {
+			console.error("Failed to arm Zipo: ", error);
+			return;
+		}
 	}
 
 	/**
 	 * Disarms the connected Zipo.
 	 * Creates a "disarmed" activity entry in the activity log.
-	 *
-	 * @returns `true` if the command is sent successfully; otherwise, `false`.
 	 */
-	async function unarm(): Promise<boolean> {
-		const success = await characteristics.rxSend("DISARM");
-
-		if (!success) return false;
-
-		activityLog.addActivity("disarmed");
-
-		isArmed.value = false;
-		return true;
+	async function unarm(): Promise<void> {
+		try {
+			await characteristics.rxSend("DISARM");
+			activityLog.addActivity("disarmed");
+			isArmed.value = false;
+		} catch (error) {
+			console.error("Failed to unarm Zipo: ", error);
+			return;
+		}
 	}
 
 	/**
 	 * Updates the client’s settings from the connected Zipo.
 	 * Fired every connect/reconnect.
-	 *
-	 * @returns `true` if the command is sent successfully; otherwise, `false`.
 	 */
-	async function sync(): Promise<boolean> {
-		const success = await characteristics.rxSend("SYNC");
-
-		if (!success) return false;
-
-		isArmed.value = false;
-		return true;
+	async function sync(): Promise<void> {
+		try {
+			await characteristics.rxSend("SYNC");
+		} catch (error) {
+			console.error("Failed to sync Zipo: ", error);
+			return;
+		}
 	}
 
 	return {
