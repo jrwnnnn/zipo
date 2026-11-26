@@ -37,22 +37,9 @@ export const useAlertStateStore = defineStore("alert state", () => {
 		}
 	}
 
-	/**
-	 * Updates the client’s settings from the connected Zipo.
-	 */
-	async function sync(): Promise<void> {
-		try {
-			await characteristics.rxSend("SYNC");
-		} catch (error) {
-			console.error("Failed to sync Zipo: ", error);
-			return;
-		}
-	}
-
 	return {
 		isArmed,
 		arm,
 		unarm,
-		sync,
 	};
 });
