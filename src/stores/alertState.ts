@@ -4,7 +4,7 @@ import { ref } from "vue";
 import { characteristics } from "@/services/characteristics";
 import { activityLog } from "@/stores/activityLog";
 
-export const useZipoStore = defineStore("zipo", () => {
+export const useAlertStateStore = defineStore("alert state", () => {
 	const isArmed = ref(false);
 
 	/**
@@ -39,7 +39,6 @@ export const useZipoStore = defineStore("zipo", () => {
 
 	/**
 	 * Updates the client’s settings from the connected Zipo.
-	 * Fired every connect/reconnect.
 	 */
 	async function sync(): Promise<void> {
 		try {

@@ -2,7 +2,7 @@
 import { ref, watch, computed } from "vue";
 import { useIntervalFn } from "@vueuse/core";
 import { useConnectivityStore } from "@/stores/connectivity";
-import { useZipoStore } from "@/stores/zipo";
+import { useAlertStateStore } from "@/stores/alertState";
 
 const frames = [
 	[
@@ -163,13 +163,13 @@ const FRAME_UNARMED = 6;
 const FRAME_ARMED = 9;
 
 const connectivity = useConnectivityStore();
-const zipo = useZipoStore();
+const alertState = useAlertStateStore();
 
 const target = computed(() => {
 	if (connectivity.state === "idle") return FRAME_IDLE;
 	if (connectivity.state === "connecting") return FRAME_CONNECTING;
 	if (connectivity.state === "connected") {
-		return zipo.isArmed ? FRAME_ARMED : FRAME_UNARMED;
+		return alertState.isArmed ? FRAME_ARMED : FRAME_UNARMED;
 	}
 	return 0;
 });
@@ -182,7 +182,7 @@ useIntervalFn(() => {
 watch(
 	() => connectivity.state,
 	(state) => {
-		if (state !== "connected") zipo.isArmed = false;
+		if (state !== "connected") alertState.isArmed = false;
 	},
 );
 </script>
