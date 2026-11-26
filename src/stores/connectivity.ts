@@ -3,8 +3,6 @@ import { BleClient, type BleDevice } from "@capacitor-community/bluetooth-le";
 import { defineStore } from "pinia";
 import { ref } from "vue";
 
-import { useAlertStateStore } from "./alertState";
-
 import { characteristics } from "@/services/characteristics";
 import { keepAlive } from "@/services/keepAlive";
 import { sync } from "@/services/sync";
@@ -14,7 +12,6 @@ import { activityLog } from "@/stores/activityLog";
 let timer: ReturnType<typeof setTimeout> | undefined;
 
 export const useConnectivityStore = defineStore("connectivity", () => {
-	const alertState = useAlertStateStore();
 	const state = ref<"connected" | "connecting" | "idle">("idle");
 	const esp = ref<BleDevice | null>(null);
 

@@ -1,11 +1,20 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 import { characteristics } from "@/services/characteristics";
 import { activityLog } from "@/stores/activityLog";
+import { useConnectivityStore } from "@/stores/connectivity";
 
 export const useAlertStateStore = defineStore("alert state", () => {
+	const connectivity = useConnectivityStore();
 	const isArmed = ref(false);
+
+	watch(
+		() => connectivity.state,
+		(state) => {
+			if (state !== "connected") isArmed.value = false;
+		},
+	);
 
 	/**
 	 * Arms the connected Zipo.
