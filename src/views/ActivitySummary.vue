@@ -19,17 +19,12 @@ import disarmedIcon from "@/assets/ui/disarmed-icon.png";
 
 const route = useRoute();
 
-async function openLocation() {
-	await InAppBrowser.openInExternalBrowser({
-		url: mapsUrl.value,
-	});
-}
-
 const activity = computed(() =>
 	activityLog
 		.getActivities()
 		.value.find((activity) => activity.id === Number(route.params.eventId)),
 );
+
 const geolocation = computed(() => activity.value?.geolocation);
 const mapsUrl = computed(() =>
 	geolocation.value
@@ -91,7 +86,11 @@ const mapsUrl = computed(() =>
 
 					<div
 						v-if="geolocation"
-						@click="openLocation()"
+						@click="
+							InAppBrowser.openInExternalBrowser({
+								url: mapsUrl,
+							})
+						"
 						class="h-50 rounded-md"
 					>
 						<iframe
