@@ -7,6 +7,7 @@ import {
 	IonPage,
 	IonToolbar,
 } from "@ionic/vue";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 import { activityLog } from "@/stores/activityLog";
 import connectIcon from "@/assets/ui/connect-icon.png";
@@ -20,17 +21,21 @@ const route = useRoute();
 
 async function openLocation() {
 	await InAppBrowser.openInExternalBrowser({
-		url: mapsUrl,
+		url: mapsUrl.value,
 	});
 }
 
-const activity = activityLog
-	.getActivities()
-	.value.find((activity) => activity.id === Number(route.params.eventId));
-const geolocation = activity?.geolocation;
-const mapsUrl = geolocation
-	? `https://maps.google.com/maps?q=${geolocation.latitude},${geolocation.longitude}&z=15&output=embed`
-	: "";
+const activity = computed(() =>
+	activityLog
+		.getActivities()
+		.value.find((activity) => activity.id === Number(route.params.eventId)),
+);
+const geolocation = computed(() => activity.value?.geolocation);
+const mapsUrl = computed(() =>
+	geolocation.value
+		? `https://maps.google.com/maps?q=${geolocation.value.latitude},${geolocation.value.longitude}&z=15&output=embed`
+		: "",
+);
 </script>
 
 <template>
@@ -84,12 +89,16 @@ const mapsUrl = geolocation
 						</p>
 					</div>
 
-					<div v-if="geolocation" @click="openLocation()">
+					<div
+						v-if="geolocation"
+						@click="openLocation()"
+						class="h-50 rounded-md"
+					>
 						<iframe
 							:src="mapsUrl"
 							width="100%"
 							loading="lazy"
-							class="pointer-events-none h-50 rounded-md border-none"
+							class="pointer-events-none h-full rounded-md border-none"
 						></iframe>
 					</div>
 				</div>
