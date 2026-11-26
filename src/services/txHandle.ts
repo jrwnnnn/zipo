@@ -16,12 +16,12 @@ export async function txHandle(incoming: string): Promise<void> {
 	const alertMode = useAlertModeStore();
 
 	switch (incoming) {
-		case "ARM": {
+		case "STATE.ARMED": {
 			zipo.isArmed = true;
 			break;
 		}
 
-		case "DISARM": {
+		case "STATE.DISARMED": {
 			zipo.isArmed = false;
 			break;
 		}
