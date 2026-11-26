@@ -66,8 +66,8 @@ const mapsUrl = computed(() =>
 					<div class="flex justify-between">
 						<p class="text-m">Timestamp</p>
 						<p class="text-muted">
-							{{ new Date(activity.timestamp as number).toLocaleDateString() }}
-							{{ new Date(activity.timestamp as number).toLocaleTimeString() }}
+							{{ new Date(activity.timestamp).toLocaleDateString() }}
+							{{ new Date(activity.timestamp).toLocaleTimeString() }}
 						</p>
 					</div>
 					<div class="flex justify-between">
