@@ -8,12 +8,10 @@ import { useConnectivityStore } from "@/stores/connectivity";
 
 const KEEP_ALIVE_CHANNEL_ID = "keepAlive";
 
-ForegroundService.addListener("buttonClicked", async (e) => {
-	if (e.buttonId === 1) {
-		const connectivity = useConnectivityStore();
-		await keepAlive.stop();
-		await connectivity.disconnect();
-	}
+ForegroundService.addListener("notificationTapped", async () => {
+	const connectivity = useConnectivityStore();
+	await keepAlive.stop();
+	await connectivity.disconnect();
 });
 
 export const keepAlive = {
