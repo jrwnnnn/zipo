@@ -8,10 +8,12 @@ import { keepAlive } from "@/services/keepAlive";
 import { sync } from "@/services/sync";
 import { SERVICE_UUID } from "@/services/uuids";
 import { activityLog } from "@/stores/activityLog";
+import { useAlertStateStore } from "@/stores/alertState";
 
 let timer: ReturnType<typeof setTimeout> | undefined;
 
 export const useConnectivityStore = defineStore("connectivity", () => {
+	const alertState = useAlertStateStore();
 	const state = ref<"connected" | "connecting" | "idle">("idle");
 	const esp = ref<BleDevice | null>(null);
 
@@ -72,6 +74,8 @@ export const useConnectivityStore = defineStore("connectivity", () => {
 	async function disconnect() {
 		if (!esp.value) return;
 		const id = esp.value.deviceId;
+
+		await alertState.disarm();
 		await BleClient.disconnect(id);
 	}
 
