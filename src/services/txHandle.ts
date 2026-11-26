@@ -3,6 +3,7 @@ import { Haptics } from "@capacitor/haptics";
 import { geolocation } from "@/services/geolocation";
 import { notifyLocal } from "@/services/notifyLocal";
 import { activityLog } from "@/stores/activityLog";
+import { useAlertModeStore } from "@/stores/alertMode";
 import { useZipoStore } from "@/stores/zipo";
 
 /**
@@ -12,6 +13,7 @@ import { useZipoStore } from "@/stores/zipo";
  */
 export async function txHandle(incoming: string): Promise<void> {
 	const zipo = useZipoStore();
+	const alertMode = useAlertModeStore();
 
 	switch (incoming) {
 		case "STATE.ARMED": {
@@ -24,11 +26,28 @@ export async function txHandle(incoming: string): Promise<void> {
 			break;
 		}
 
+		case "MODE.FULL": {
+			alertMode.mode = "full";
+			break;
+		}
+
+		case "MODE.PHONE": {
+			alertMode.mode = "phone";
+			break;
+		}
+
+		case "MODE.ZIPO": {
+			alertMode.mode = "zipo";
+			break;
+		}
+
 		case "TRIGGER.LOW": {
 			const id = await activityLog.addActivity(
 				"triggered",
 				await geolocation.getPosition(),
 			);
+
+			if (alertMode.mode === "zipo") break;
 
 			await notifyLocal(
 				id,
