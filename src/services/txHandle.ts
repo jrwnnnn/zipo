@@ -42,6 +42,8 @@ export async function txHandle(incoming: string): Promise<void> {
 		}
 
 		case "TRIGGER.LOW": {
+			alertState.isArmed = false;
+
 			const id = await activityLog.addActivity(
 				"triggered",
 				await geolocation.getPosition(),
