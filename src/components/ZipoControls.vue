@@ -13,7 +13,7 @@ async function toggleConnectivity() {
 
 async function toggleModes() {
 	if (!alertState.isArmed) await alertState.arm();
-	else await alertState.unarm();
+	else await alertState.disarm();
 }
 </script>
 

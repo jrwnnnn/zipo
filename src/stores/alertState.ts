@@ -35,7 +35,7 @@ export const useAlertStateStore = defineStore("alert state", () => {
 	 * Disarms the connected Zipo.
 	 * Creates a "disarmed" activity entry in the activity log.
 	 */
-	async function unarm(): Promise<void> {
+	async function disarm(): Promise<void> {
 		try {
 			await characteristics.rxSend("DISARM");
 			activityLog.addActivity("disarmed");
@@ -49,6 +49,6 @@ export const useAlertStateStore = defineStore("alert state", () => {
 	return {
 		isArmed,
 		arm,
-		unarm,
+		disarm,
 	};
 });
