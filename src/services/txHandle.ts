@@ -49,11 +49,7 @@ export async function txHandle(incoming: string): Promise<void> {
 
 			if (alertMode.mode === "zipo") break;
 
-			await notifyLocal(
-				id,
-				"Zipo triggered",
-				`Detected at ${new Date().toLocaleTimeString()}`,
-			);
+			await notifyLocal(id, "Zipo triggered", "Tap to view");
 			await Haptics.vibrate({ duration: 3000 });
 			break;
 		}
